@@ -11,10 +11,10 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
-import { Calorie, DialogMode } from '../../helpers/types';
+import { Body, DialogMode } from '../../helpers/types';
 import { formatDateToField } from '../../helpers/helpers';
 import { useSnackbar } from 'notistack';
-import { CalorieDialog } from './useCalorie';
+import { BodyDialog } from './useBody';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -23,31 +23,36 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type CalorieAddDialogProps = {
-  dialog: CalorieDialog;
+type BodyAddDialogProps = {
+  dialog: BodyDialog;
   setDialog: (value: boolean, mode: DialogMode) => void;
   fetchData: (page?: number) => void;
 };
 
 const defaultValues = {
-  date: '',
-  caloriesConsumed: 0,
-  caloriesBurned: 0,
-  deficit: 0,
-  weight: 0,
-  notes: ''
+  arm: 0,
+  neck: 0,
+  belt: 0,
+  belly: 0,
+  ass: 0,
+  forearm: 0,
+  calf: 0,
+  thigh: 0,
+  chest: 0,
+  date: ''
 };
-export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
+
+export const BodyAddDialog = (props: BodyAddDialogProps) => {
   const classes = useStyles();
-  const { caloriesApi } = useApi();
+  const { bodyApi } = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { dialog, setDialog, fetchData } = props;
 
-  const [data, setData] = useState<Calorie>(defaultValues);
+  const [data, setData] = useState<Body>(defaultValues);
 
   useEffect(() => {
     if (dialog.data) {
-      setData({ ...dialog.data, date: formatDateToField(dialog.data.date) });
+      setData(dialog.data);
     }
   }, [dialog.data]);
 
@@ -57,7 +62,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
 
   const handleSubmit = async () => {
     if (dialog.mode === 'ADD') {
-      const result = await caloriesApi.post(data);
+      const result = await bodyApi.post(data);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
@@ -68,7 +73,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
     }
 
     if (dialog.mode === 'EDIT') {
-      const result = await caloriesApi.update(data);
+      const result = await bodyApi.update(data);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
           variant: 'success'
@@ -96,7 +101,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Denný sumár kalórií
+              Veľkosti tela
             </Typography>
             <Button autoFocus color="inherit" onClick={handleSubmit}>
               Uložiť
@@ -120,46 +125,101 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="caloriesConsumed"
-                  label="Prijate kalórie"
+                  name="neck"
+                  label="Krk"
                   variant="outlined"
                   type="number"
                   onChange={handleChange}
                   className={classes.input}
-                  defaultValue={data.caloriesConsumed}
+                  defaultValue={data.neck}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="caloriesBurned"
-                  label="Splálené kalórie"
+                  name="chest"
+                  label="Hrudník"
                   variant="outlined"
                   type="number"
                   onChange={handleChange}
                   className={classes.input}
-                  defaultValue={data.caloriesBurned}
+                  defaultValue={data.chest}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="weight"
-                  label="Aktuálna hmotnosť"
+                  name="arm"
+                  label="Ruky"
                   variant="outlined"
                   type="number"
                   onChange={handleChange}
                   className={classes.input}
-                  defaultValue={data.weight}
+                  defaultValue={data.arm}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  name="notes"
-                  label="Poznámky"
+                  name="forearm"
+                  label="Predlaktia"
                   variant="outlined"
-                  type="text"
+                  type="number"
                   onChange={handleChange}
                   className={classes.input}
-                  defaultValue={data.notes}
+                  defaultValue={data.forearm}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="belly"
+                  label="Brucho"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  className={classes.input}
+                  defaultValue={data.belly}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="belt"
+                  label="Pás"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  className={classes.input}
+                  defaultValue={data.belt}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="ass"
+                  label="Zadok"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  className={classes.input}
+                  defaultValue={data.ass}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="thigh"
+                  label="Stehná"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  className={classes.input}
+                  defaultValue={data.thigh}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="calf"
+                  label="Lýtka"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  className={classes.input}
+                  defaultValue={data.calf}
                 />
               </Grid>
             </Grid>

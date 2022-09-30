@@ -1,12 +1,5 @@
 import { FC } from 'react';
-import {
-  CalorieAddDialog,
-  CalorieFilterDetail,
-  CalorieFilterDialog,
-  Layout,
-  Loading,
-  useCalorie
-} from '../components';
+import { Layout, Loading } from '../components';
 import {
   makeStyles,
   Paper,
@@ -19,32 +12,35 @@ import {
   TableRow
 } from '@material-ui/core';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import { BodyAddDialog, BodyFilterDialog, useBody } from '../components/Body';
+import { formatDate } from '../helpers/helpers';
 
-export const CaloriesPage: FC = () => {
+export const BodyPage: FC = () => {
   const classes = useStyles();
+
   const {
     handleDialog,
     handleFilterOpen,
     loading,
-    filter,
     state,
+    handleSetState,
     handleChangePage,
-    fetchData,
     dialog,
-    setFilter,
-    handleSetState
-  } = useCalorie();
+    fetchData,
+    filter,
+    setFilter
+  } = useBody();
 
   return (
-    <Layout title="Kalórie" handleDialogOpen={handleDialog} hadleFilterOpen={handleFilterOpen}>
+    <Layout
+      title="Veľkosti tela"
+      handleDialogOpen={handleDialog}
+      hadleFilterOpen={handleFilterOpen}>
       <div>
         {loading ? (
           <Loading />
         ) : (
           <>
-            {filter.dateFrom && filter.dateTo && (
-              <CalorieFilterDetail data={state.data} filter={filter} />
-            )}
             <Paper className={classes.root}>
               <TableContainer className={classes.container}>
                 <Table aria-label="sticky pagination table" stickyHeader>
@@ -52,19 +48,28 @@ export const CaloriesPage: FC = () => {
                     <TableRow>
                       <TableCell className={classes.heading}>Dátum</TableCell>
                       <TableCell className={classes.heading} align="left">
-                        Prijaté kalórie (kcal)
+                        Krk (cm)
                       </TableCell>
                       <TableCell className={classes.heading} align="left">
-                        Spálené kalórie (kcal)
+                        Hrudník (cm)
                       </TableCell>
                       <TableCell className={classes.heading} align="left">
-                        Deficit (kcal)
+                        Ruky (cm)
                       </TableCell>
                       <TableCell className={classes.heading} align="left">
-                        Hmotnosť (kg)
+                        Predlaktia (cm)
                       </TableCell>
                       <TableCell className={classes.heading} align="left">
-                        Poznámky
+                        Brucho (cm)
+                      </TableCell>
+                      <TableCell className={classes.heading} align="left">
+                        Pás (cm)
+                      </TableCell>
+                      <TableCell className={classes.heading} align="left">
+                        Stehná (cm)
+                      </TableCell>
+                      <TableCell className={classes.heading} align="left">
+                        Lýtka (cm)
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -73,15 +78,18 @@ export const CaloriesPage: FC = () => {
                       <TableRow
                         key={row.id}
                         onClick={() => handleDialog(true, 'EDIT', row)}
-                        className={row.deficit < 0 ? classes.deficit : classes.surplus}>
+                        className={classes.row}>
                         <TableCell component="th" scope="row">
-                          {row.date}
+                          {formatDate(row.date)}
                         </TableCell>
-                        <TableCell align="left">{row.caloriesConsumed}</TableCell>
-                        <TableCell align="left">{row.caloriesBurned}</TableCell>
-                        <TableCell align="left">{row.deficit}</TableCell>
-                        <TableCell align="left">{row.weight}</TableCell>
-                        <TableCell align="left">{row.notes}</TableCell>
+                        <TableCell align="left">{row.neck}</TableCell>
+                        <TableCell align="left">{row.chest}</TableCell>
+                        <TableCell align="left">{row.arm}</TableCell>
+                        <TableCell align="left">{row.forearm}</TableCell>
+                        <TableCell align="left">{row.belly}</TableCell>
+                        <TableCell align="left">{row.belt}</TableCell>
+                        <TableCell align="left">{row.thigh}</TableCell>
+                        <TableCell align="left">{row.calf}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -108,8 +116,8 @@ export const CaloriesPage: FC = () => {
           </>
         )}
       </div>
-      <CalorieAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />
-      <CalorieFilterDialog filter={filter} setFilter={setFilter} setData={handleSetState} />
+      <BodyAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />
+      <BodyFilterDialog filter={filter} setFilter={setFilter} setData={handleSetState} />
     </Layout>
   );
 };
@@ -127,12 +135,7 @@ const useStyles = makeStyles((theme: any) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightBold
   },
-  deficit: {
-    backgroundColor: '#0167B117',
-    cursor: 'pointer'
-  },
-  surplus: {
-    backgroundColor: '#7E56AC24',
+  row: {
     cursor: 'pointer'
   },
   pagination: {

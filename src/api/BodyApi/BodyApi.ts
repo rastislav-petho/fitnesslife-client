@@ -1,22 +1,20 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
-import { CalorieFilter } from '../../components/Calorie/useCalorie';
+import { BodyFilter } from '../../components/Body/useBody';
 import { Context } from '../../context/context';
-import { Calorie, CalorieApi } from '../../helpers/types';
-import { fromApi, toApi } from './CaloriesMapper';
+import { Body } from '../../helpers/types';
 
-export const CaloriesApi = () => {
+export const BodyApi = () => {
   const { state } = useContext(Context);
   const { enqueueSnackbar } = useSnackbar();
 
-  const post = async (data: Calorie) => {
-    const formatData = toApi(data);
+  const post = async (data: Body) => {
     try {
       const response = await axios.post(
-        state.apiUrl + '/calorie',
+        state.apiUrl + '/body',
         {
-          ...formatData,
+          ...data,
           user_id: state.user.id
         },
         { ...options }
@@ -28,14 +26,9 @@ export const CaloriesApi = () => {
     }
   };
 
-  const update = async (data: Calorie) => {
-    const formatData = toApi(data);
+  const update = async (data: Body) => {
     try {
-      const response = await axios.patch(
-        state.apiUrl + '/calorie',
-        { ...formatData },
-        { ...options }
-      );
+      const response = await axios.patch(state.apiUrl + '/body', { ...data }, { ...options });
       return response;
     } catch (error) {
       enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
@@ -45,7 +38,7 @@ export const CaloriesApi = () => {
 
   const list = async (page: number = 1): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/calorie/${state.user.id}`, {
+      const response = await axios.get(`${state.apiUrl}/body/${state.user.id}`, {
         ...options,
         params: {
           page: page
@@ -53,7 +46,7 @@ export const CaloriesApi = () => {
       });
       const data = {
         ...response,
-        data: response.data.data.map((item: CalorieApi) => fromApi(item)),
+        data: response.data.data,
         pagination: {
           total: response.data.total,
           perPage: response.data.per_page,
@@ -67,9 +60,9 @@ export const CaloriesApi = () => {
     }
   };
 
-  const filter = async (filter: CalorieFilter): Promise<any> => {
+  const filter = async (filter: BodyFilter): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/calorie/filter`, {
+      const response = await axios.get(`${state.apiUrl}/body/filter`, {
         ...options,
         params: {
           id: state.user.id,
@@ -77,11 +70,7 @@ export const CaloriesApi = () => {
           dateTo: filter.dateTo
         }
       });
-      const data = {
-        ...response,
-        data: response.data.map((item: CalorieApi) => fromApi(item))
-      };
-      return data;
+      return response;
     } catch (error) {
       enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
       return Promise.reject(error);

@@ -11,8 +11,8 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
-import { Calorie } from '../../helpers/types';
-import { CalorieFilter } from './useCalorie';
+import { Body } from '../../helpers/types';
+import { BodyFilter } from './useBody';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -21,15 +21,15 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type CalorieFilterDialogProps = {
-  filter: CalorieFilter;
-  setFilter: React.Dispatch<React.SetStateAction<CalorieFilter>>;
-  setData: (data: Calorie[]) => void;
+type BodyFilterDialogProps = {
+  filter: BodyFilter;
+  setFilter: React.Dispatch<React.SetStateAction<BodyFilter>>;
+  setData: (data: Body[]) => void;
 };
 
-export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
+export const BodyFilterDialog = (props: BodyFilterDialogProps) => {
   const classes = useStyles();
-  const { caloriesApi } = useApi();
+  const { bodyApi } = useApi();
   const { filter, setFilter, setData } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
   };
 
   const handleSubmit = async () => {
-    const result = await caloriesApi.filter(filter);
+    const result = await bodyApi.filter(filter);
     if (result.status === 200) {
       setData(result.data);
       setFilter({ ...filter, open: false });

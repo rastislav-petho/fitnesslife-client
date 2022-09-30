@@ -32,6 +32,20 @@ export type Calorie = {
   notes: string;
 };
 
+export type Body = {
+  id?: number;
+  arm: number;
+  neck: number;
+  belt: number;
+  belly: number;
+  ass: number;
+  forearm: number;
+  calf: number;
+  thigh: number;
+  chest: number;
+  date: string;
+};
+
 export type Trening = {};
 
 export type Register = {
@@ -45,3 +59,5 @@ export type Login = {
   email: string;
   password: string;
 };
+
+export type DialogMode = 'ADD' | 'EDIT';

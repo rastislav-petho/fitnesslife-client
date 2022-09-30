@@ -168,7 +168,7 @@ const useStyles = makeStyles((theme: any) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
     fontSize: theme.typography.pxToRem(30)
   }
 }));

@@ -1,21 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useApi } from '../../api/useApi';
-import { Calorie, DialogMode } from '../../helpers/types';
+import { Body, DialogMode } from '../../helpers/types';
 
-export type CalorieDialog = {
+export type BodyDialog = {
   open: boolean;
   mode: DialogMode;
-  data?: Calorie;
+  data?: Body;
 };
 
-export type CalorieFilter = {
-  dateFrom: string;
-  dateTo: string;
-  open: boolean;
-};
-
-export type CaloriePageDataProps = {
-  data: Calorie[];
+export type BodyPageDataProps = {
+  data: Body[];
   pagination: {
     total: number;
     perPage: number;
@@ -23,29 +17,35 @@ export type CaloriePageDataProps = {
   };
 };
 
-export const useCalorie = () => {
+export type BodyFilter = {
+  dateFrom: string;
+  dateTo: string;
+  open: boolean;
+};
+
+export const useBody = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [dialog, setDialog] = useState<CalorieDialog>({
+  const [dialog, setDialog] = useState<BodyDialog>({
     open: false,
     mode: 'ADD'
   });
-  const [state, setState] = useState<CaloriePageDataProps>({
+  const [state, setState] = useState<BodyPageDataProps>({
     data: [],
     pagination: { total: 0, perPage: 0, currentPage: 1 }
   });
-  const [filter, setFilter] = useState<CalorieFilter>({
+  const [filter, setFilter] = useState<BodyFilter>({
     dateFrom: '',
     dateTo: '',
     open: false
   });
 
-  const { caloriesApi } = useApi();
+  const { bodyApi } = useApi();
 
   useEffect(() => {
     fetchData(state.pagination.currentPage);
   }, []);
 
-  const handleDialog = (value: boolean, mode: DialogMode, data?: Calorie) => {
+  const handleDialog = (value: boolean, mode: DialogMode, data?: Body) => {
     setDialog({ open: value, mode: mode, data });
   };
 
@@ -53,13 +53,9 @@ export const useCalorie = () => {
     setFilter({ ...filter, open: value });
   };
 
-  const handleSetState = (data: Calorie[]) => {
-    setState({ ...state, data: data });
-  };
-
   const fetchData = async (page?: number) => {
     setLoading(true);
-    const response = await caloriesApi.list(page);
+    const response = await bodyApi.list(page);
     setState({ data: response.data, pagination: response.pagination });
     setLoading(false);
   };
@@ -67,16 +63,22 @@ export const useCalorie = () => {
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     fetchData(newPage + 1);
   };
+
+  const handleSetState = (data: Body[]) => {
+    setState({ ...state, data: data });
+  };
+
   return {
-    handleDialog,
+    handleSetState,
     handleChangePage,
     fetchData,
     handleFilterOpen,
-    handleSetState,
-    loading,
-    dialog,
-    setFilter,
+    handleDialog,
     filter,
-    state
+    setFilter,
+    state,
+    dialog,
+    loading,
+    setLoading
   };
 };

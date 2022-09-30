@@ -14,18 +14,18 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
-import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
 import { useApi } from '../api/useApi';
-import { CaloriesDialogMode } from './Calorie/useCalorie';
+import { DialogMode } from '../helpers/types';
 
 type LayoutProps = {
   title: string;
-  handleDialogOpen: (value: boolean, mode: CaloriesDialogMode) => void;
+  handleDialogOpen: (value: boolean, mode: DialogMode) => void;
   hadleFilterOpen: (value: boolean) => void;
 };
 
@@ -49,6 +49,7 @@ export const Layout: FC<LayoutProps> = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+        color="secondary"
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
@@ -91,7 +92,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
-            v0.0.1
+            v0.0.3
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -107,27 +108,27 @@ export const Layout: FC<LayoutProps> = (props) => {
               <ListItemText primary="Kalórie" />
             </ListItem>
           </Link>
-          <Link to="/trening" className={classes.link}>
+          {/* <Link to="/trening" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <DirectionsRunIcon className={classes.icon} />
+                <FitnessCenterIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText primary="Tréning" />
             </ListItem>
-          </Link>
-          <Link to="/settings" className={classes.link}>
+          </Link> */}
+          <Link to="/body" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <SettingsIcon className={classes.icon} />
+                <AccessibilityNewIcon className={classes.icon} />
               </ListItemIcon>
-              <ListItemText primary="Nastavenia" />
+              <ListItemText primary="Veľkosti tela" />
             </ListItem>
           </Link>
           <ListItem button onClick={() => authApi.logout()}>
             <ListItemIcon>
               <ExitToAppIcon className={classes.icon} />
             </ListItemIcon>
-            <ListItemText primary="Odhlasiť sa" />
+            <ListItemText primary="Odhlasiť sa" className={classes.link} />
           </ListItem>
         </List>
       </Drawer>
@@ -200,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0
   },
   link: {
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none'
