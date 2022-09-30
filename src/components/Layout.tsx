@@ -93,6 +93,15 @@ export const Layout: FC<LayoutProps> = (props) => {
         }}
       >
         <div className={classes.drawerHeader}>
+          <Typography color="secondary" variant="h5">
+            Fitness{" "}
+          </Typography>
+          <Typography color="primary" variant="h5">
+            Life{" "}
+          </Typography>
+          <Typography variant="caption" style={{ marginLeft: 8 }}>
+            v0.0.1
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -186,7 +195,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
   },
   content: {
     flexGrow: 1,
