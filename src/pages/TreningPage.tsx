@@ -1,6 +1,6 @@
-import React, { FC, useContext, useEffect, useState } from "react";
-import { Layout, Loading } from "../components";
-import { Grid, makeStyles } from "@material-ui/core";
+import React, { FC, useContext, useEffect, useState } from 'react';
+import { Layout, Loading } from '../components';
+import { Grid, makeStyles } from '@material-ui/core';
 
 export const TreningPage: FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,12 +37,8 @@ export const TreningPage: FC = () => {
   }, []);
 
   return (
-    <Layout
-      title="Tréning"
-      handleDialogOpen={() => {}}
-      hadleFilterOpen={() => {}}
-    >
-      <div className={classes.root}>{loading ? <Loading /> : "ahoj"}</div>
+    <Layout title="Tréning" handleDialogOpen={() => {}} hadleFilterOpen={() => {}}>
+      <div className={classes.root}>{loading ? <Loading /> : 'ahoj'}</div>
     </Layout>
   );
 };
@@ -50,6 +46,6 @@ export const TreningPage: FC = () => {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: "100%",
-  },
+    width: '100%'
+  }
 }));

@@ -1,12 +1,12 @@
-import { SnackbarProvider } from "notistack";
-import { FC } from "react";
-import { Switch, Route, BrowserRouter } from "react-router-dom";
-import { PrivateRoute } from "./components";
-import { ContextProvider } from "./context/context";
-import { CaloriesPage } from "./pages/CaloriesPage";
-import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import { TreningPage } from "./pages/TreningPage";
+import { SnackbarProvider } from 'notistack';
+import { FC } from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { PrivateRoute } from './components';
+import { ContextProvider } from './context/context';
+import { CaloriesPage } from './pages/CaloriesPage';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { TreningPage } from './pages/TreningPage';
 
 const App: FC = () => {
   return (

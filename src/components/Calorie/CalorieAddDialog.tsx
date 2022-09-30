@@ -1,20 +1,20 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
-import { Container, Grid, TextField } from "@material-ui/core";
-import { useApi } from "../../api/useApi";
-import { Calorie } from "../../helpers/types";
-import { formatDateToField } from "../../helpers/helpers";
-import { useSnackbar } from "notistack";
-import { CalorieDialog, CaloriesDialogMode } from "./useCalorie";
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import { TransitionProps } from '@material-ui/core/transitions';
+import { Container, Grid, TextField } from '@material-ui/core';
+import { useApi } from '../../api/useApi';
+import { Calorie } from '../../helpers/types';
+import { formatDateToField } from '../../helpers/helpers';
+import { useSnackbar } from 'notistack';
+import { CalorieDialog, CaloriesDialogMode } from './useCalorie';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -36,12 +36,12 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
   const { dialog, setDialog, fetchData } = props;
 
   const [data, setData] = useState<Calorie>({
-    date: "",
+    date: '',
     caloriesConsumed: 0,
     caloriesBurned: 0,
     deficit: 0,
     weight: 0,
-    notes: "",
+    notes: ''
   });
 
   useEffect(() => {
@@ -49,12 +49,12 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
       dialog.data
         ? { ...dialog.data, date: formatDateToField(dialog.data.date) }
         : {
-            date: "",
+            date: '',
             caloriesConsumed: 0,
             caloriesBurned: 0,
             deficit: 0,
             weight: 0,
-            notes: "",
+            notes: ''
           }
     );
   }, [dialog.data]);
@@ -66,25 +66,25 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
   console.log(dialog);
 
   const handleSubmit = async () => {
-    if (dialog.mode === "ADD") {
+    if (dialog.mode === 'ADD') {
       const result = await caloriesApi.post(data);
       if (result.status === 200) {
-        enqueueSnackbar("Záznam bol úspešne pridaný.", { variant: "success" });
+        enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
-        setDialog(false, "ADD");
+        setDialog(false, 'ADD');
       } else {
-        enqueueSnackbar("Upss, niečo sa pokazilo", { variant: "error" });
+        enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
       }
     }
 
-    if (dialog.mode === "EDIT") {
+    if (dialog.mode === 'EDIT') {
       const result = await caloriesApi.update(data);
       if (result.status === 200) {
-        enqueueSnackbar("Záznam bol úspešne aktualizovaný.", {
-          variant: "success",
+        enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
+          variant: 'success'
         });
         fetchData();
-        setDialog(false, "ADD");
+        setDialog(false, 'ADD');
       }
     }
   };
@@ -94,17 +94,15 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
       <Dialog
         fullScreen
         open={dialog.open}
-        onClose={() => setDialog(false, "ADD")}
-        TransitionComponent={Transition}
-      >
+        onClose={() => setDialog(false, 'ADD')}
+        TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton
               edge="start"
               color="inherit"
-              onClick={() => setDialog(false, "ADD")}
-              aria-label="close"
-            >
+              onClick={() => setDialog(false, 'ADD')}
+              aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -185,18 +183,18 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      position: "relative",
+      position: 'relative'
     },
     title: {
       marginLeft: theme.spacing(2),
-      flex: 1,
+      flex: 1
     },
     root: {
       flexGrow: 1,
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(2)
     },
     input: {
-      width: "100%",
-    },
+      width: '100%'
+    }
   })
 );

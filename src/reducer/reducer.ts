@@ -1,9 +1,9 @@
 export default function reducer(state: any, action: any) {
   switch (action.type) {
-    case "LOGIN":
+    case 'LOGIN':
       return {
         ...state,
-        user: action.user,
+        user: action.user
       };
 
     default:

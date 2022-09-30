@@ -7,18 +7,18 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Grid,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import WhatshotIcon from "@material-ui/icons/Whatshot";
-import LocalPizzaIcon from "@material-ui/icons/LocalPizza";
-import AssessmentIcon from "@material-ui/icons/Assessment";
-import AssistantPhotoIcon from "@material-ui/icons/AssistantPhoto";
-import SyncIcon from "@material-ui/icons/Sync";
-import StarIcon from "@material-ui/icons/Star";
-import { formatDate } from "../../helpers/helpers";
-import { Calorie } from "../../helpers/types";
-import { CalorieFilter } from "./useCalorie";
+  Grid
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import LocalPizzaIcon from '@material-ui/icons/LocalPizza';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
+import SyncIcon from '@material-ui/icons/Sync';
+import StarIcon from '@material-ui/icons/Star';
+import { formatDate } from '../../helpers/helpers';
+import { Calorie } from '../../helpers/types';
+import { CalorieFilter } from './useCalorie';
 
 type CalorieFilterDetailProps = {
   data: Calorie[];
@@ -28,19 +28,18 @@ type CalorieFilterDetailProps = {
 export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
   const classes = useStyles();
   const { data, filter } = props;
-  const { caloriesBurnedSum, deficitSum, fat, weightSum, caloriesConsumedSum } =
-    useCalorieDetail({ data });
+  const { caloriesBurnedSum, deficitSum, fat, weightSum, caloriesConsumedSum } = useCalorieDetail({
+    data
+  });
 
   return (
     <Accordion>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
-        id="panel1a-header"
-      >
+        id="panel1a-header">
         <Typography className={classes.heading}>
-          Detail výsledkov: {formatDate(filter.dateFrom)} -{" "}
-          {formatDate(filter.dateTo)}
+          Detail výsledkov: {formatDate(filter.dateFrom)} - {formatDate(filter.dateTo)}
         </Typography>
       </AccordionSummary>
       <AccordionDetails className={classes.accordion}>
@@ -54,9 +53,7 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
               />
 
               <CardContent>
-                <div className={classes.content}>
-                  {caloriesConsumedSum} kcal
-                </div>
+                <div className={classes.content}>{caloriesConsumedSum} kcal</div>
               </CardContent>
             </Card>
           </Grid>
@@ -121,9 +118,7 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
               />
 
               <CardContent>
-                <div className={classes.content}>
-                  {(weightSum - fat).toFixed(2)} kg
-                </div>
+                <div className={classes.content}>{(weightSum - fat).toFixed(2)} kg</div>
               </CardContent>
             </Card>
           </Grid>
@@ -143,13 +138,8 @@ const useCalorieDetail = (props: UseCalorieDetailProps) => {
   let caloriesConsumedSum = 0;
   let deficitSum = 0;
   let weightSum = 0;
-  data.forEach(
-    (item) => (caloriesBurnedSum = caloriesBurnedSum + item.caloriesBurned)
-  );
-  data.forEach(
-    (item) =>
-      (caloriesConsumedSum = caloriesConsumedSum + item.caloriesConsumed)
-  );
+  data.forEach((item) => (caloriesBurnedSum = caloriesBurnedSum + item.caloriesBurned));
+  data.forEach((item) => (caloriesConsumedSum = caloriesConsumedSum + item.caloriesConsumed));
   data.forEach((item) => (deficitSum = deficitSum + Number(item.deficit)));
   data.forEach((item) => (weightSum = weightSum + item.weight));
 
@@ -161,24 +151,24 @@ const useCalorieDetail = (props: UseCalorieDetailProps) => {
 const useStyles = makeStyles((theme: any) => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightBold,
+    fontWeight: theme.typography.fontWeightBold
   },
   card: {
-    maxWidth: "100%",
-    opacity: 0.88,
+    maxWidth: '100%',
+    opacity: 0.88
   },
   accordion: {
     backgroundImage: 'url("/login-bg3.jpg")',
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   },
   icon: {},
   content: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     color: theme.palette.secondary.main,
-    fontSize: theme.typography.pxToRem(30),
-  },
+    fontSize: theme.typography.pxToRem(30)
+  }
 }));

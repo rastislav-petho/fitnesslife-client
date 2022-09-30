@@ -1,5 +1,5 @@
-import { formatDate } from "../../helpers/helpers";
-import { Calorie, CalorieApi } from "../../helpers/types";
+import { formatDate } from '../../helpers/helpers';
+import { Calorie, CalorieApi } from '../../helpers/types';
 
 export const toApi = (data: Calorie): CalorieApi => {
   return {
@@ -8,7 +8,7 @@ export const toApi = (data: Calorie): CalorieApi => {
     calories_consumed: Number(data.caloriesConsumed),
     calories_burned: Number(data.caloriesBurned),
     weight: Number(data.weight),
-    notes: data.notes,
+    notes: data.notes
   };
 };
 
@@ -21,6 +21,6 @@ export const fromApi = (data: CalorieApi): Calorie => {
     caloriesBurned: data.calories_burned,
     deficit: data.deficit,
     weight: data.weight,
-    notes: data.notes,
+    notes: data.notes
   };
 };

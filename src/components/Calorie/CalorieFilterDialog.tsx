@@ -1,18 +1,18 @@
-import React, { ChangeEvent } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import { TransitionProps } from "@material-ui/core/transitions";
-import { Container, Grid, TextField } from "@material-ui/core";
-import { useApi } from "../../api/useApi";
-import { Calorie } from "../../helpers/types";
-import { CalorieFilter } from "./useCalorie";
+import React, { ChangeEvent } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import { TransitionProps } from '@material-ui/core/transitions';
+import { Container, Grid, TextField } from '@material-ui/core';
+import { useApi } from '../../api/useApi';
+import { Calorie } from '../../helpers/types';
+import { CalorieFilter } from './useCalorie';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -50,16 +50,14 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
         fullScreen
         open={filter.open}
         onClose={() => setFilter({ ...filter, open: false })}
-        TransitionComponent={Transition}
-      >
+        TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
             <IconButton
               edge="start"
               color="inherit"
               onClick={() => setFilter({ ...filter, open: false })}
-              aria-label="close"
-            >
+              aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
@@ -108,18 +106,18 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
-      position: "relative",
+      position: 'relative'
     },
     title: {
       marginLeft: theme.spacing(2),
-      flex: 1,
+      flex: 1
     },
     root: {
       flexGrow: 1,
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(2)
     },
     input: {
-      width: "100%",
-    },
+      width: '100%'
+    }
   })
 );

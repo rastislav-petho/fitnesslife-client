@@ -14,15 +14,9 @@ export const Loading: FC = () => {
         alignItems: 'center',
         width: '100%',
         height: '100%',
-        backgroundColor: '#ffffff98',
-      }}
-    >
-      <ReactLoading
-        type={'spinningBubbles'}
-        color="#f50057"
-        height={'100px'}
-        width={'100px'}
-      />
+        backgroundColor: '#ffffff98'
+      }}>
+      <ReactLoading type={'spinningBubbles'} color="#f50057" height={'100px'} width={'100px'} />
     </div>
   );
 };

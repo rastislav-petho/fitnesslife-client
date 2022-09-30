@@ -6,7 +6,7 @@ export type User = {
 };
 
 export type Message = {
-  type: "success" | "danger" | "warning" | "info" | null;
+  type: 'success' | 'danger' | 'warning' | 'info' | null;
   message: string | null;
 };
 

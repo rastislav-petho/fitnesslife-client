@@ -1,27 +1,27 @@
-import { FC, useState } from "react";
-import { Link } from "react-router-dom";
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import WhatshotIcon from "@material-ui/icons/Whatshot";
-import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
-import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import SettingsIcon from "@material-ui/icons/Settings";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import SearchIcon from "@material-ui/icons/Search";
-import { useApi } from "../api/useApi";
-import { CaloriesDialogMode } from "./Calorie/useCalorie";
+import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
+import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import SearchIcon from '@material-ui/icons/Search';
+import { useApi } from '../api/useApi';
+import { CaloriesDialogMode } from './Calorie/useCalorie';
 
 type LayoutProps = {
   title: string;
@@ -51,33 +51,25 @@ export const Layout: FC<LayoutProps> = (props) => {
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+          [classes.appBarShift]: open
+        })}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
+            className={clsx(classes.menuButton, open && classes.hide)}>
             <MenuIcon />
           </IconButton>
           <Typography>{title}</Typography>
 
           <div>
-            <IconButton
-              onClick={() => hadleFilterOpen(true)}
-              className={classes.filter}
-            >
+            <IconButton onClick={() => hadleFilterOpen(true)} className={classes.filter}>
               <SearchIcon />
             </IconButton>
 
-            <IconButton
-              onClick={() => handleDialogOpen(true, "ADD")}
-              className={classes.add}
-            >
+            <IconButton onClick={() => handleDialogOpen(true, 'ADD')} className={classes.add}>
               <AddIcon />
             </IconButton>
           </div>
@@ -89,25 +81,20 @@ export const Layout: FC<LayoutProps> = (props) => {
         anchor="left"
         open={open}
         classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
+          paper: classes.drawerPaper
+        }}>
         <div className={classes.drawerHeader}>
           <Typography color="secondary" variant="h5">
-            Fitness{" "}
+            Fitness{' '}
           </Typography>
           <Typography color="primary" variant="h5">
-            Life{" "}
+            Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
             v0.0.1
           </Typography>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </div>
         <Divider />
@@ -146,9 +133,8 @@ export const Layout: FC<LayoutProps> = (props) => {
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
+          [classes.contentShift]: open
+        })}>
         <div className={classes.drawerHeader} />
         {props.children}
       </main>
@@ -160,77 +146,77 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    display: 'flex'
   },
   appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      duration: theme.transitions.duration.leavingScreen
+    })
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
+      duration: theme.transitions.duration.enteringScreen
+    })
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   hide: {
-    display: "none",
+    display: 'none'
   },
   drawer: {
     width: drawerWidth,
-    flexShrink: 0,
+    flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: drawerWidth
   },
   drawerHeader: {
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "space-between",
+    justifyContent: 'space-between'
   },
   content: {
     flexGrow: 1,
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
     marginLeft: -drawerWidth,
-    width: "100%",
+    width: '100%'
   },
   contentShift: {
-    transition: theme.transitions.create("margin", {
+    transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      duration: theme.transitions.duration.enteringScreen
     }),
-    marginLeft: 0,
+    marginLeft: 0
   },
   link: {
     color: theme.palette.text.primary,
-    textDecoration: "none",
-    "&:hover": {
-      textDecoration: "none",
-    },
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'none'
+    }
   },
   toolbar: {
-    displey: "flex",
-    justifyContent: "space-between",
+    displey: 'flex',
+    justifyContent: 'space-between'
   },
   add: {
-    color: "#ffffff",
+    color: '#ffffff'
   },
   filter: {
-    color: "#ffffff",
+    color: '#ffffff'
   },
   icon: {
-    color: theme.palette.secondary.main,
-  },
+    color: theme.palette.secondary.main
+  }
 }));

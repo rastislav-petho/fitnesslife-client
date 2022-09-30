@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   CalorieAddDialog,
   CalorieFilterDetail,
   CalorieFilterDialog,
   Layout,
   Loading,
-  useCalorie,
-} from "../components";
+  useCalorie
+} from '../components';
 import {
   makeStyles,
   Paper,
@@ -16,9 +16,9 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow,
-} from "@material-ui/core";
-import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+  TableRow
+} from '@material-ui/core';
+import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 
 export const CaloriesPage: FC = () => {
   const classes = useStyles();
@@ -32,15 +32,11 @@ export const CaloriesPage: FC = () => {
     fetchData,
     dialog,
     setFilter,
-    handleSetState,
+    handleSetState
   } = useCalorie();
 
   return (
-    <Layout
-      title="Kalórie"
-      handleDialogOpen={handleDialog}
-      hadleFilterOpen={handleFilterOpen}
-    >
+    <Layout title="Kalórie" handleDialogOpen={handleDialog} hadleFilterOpen={handleFilterOpen}>
       <div>
         {loading ? (
           <Loading />
@@ -66,17 +62,12 @@ export const CaloriesPage: FC = () => {
                     {state.data.map((row: any) => (
                       <TableRow
                         key={row.id}
-                        onClick={() => handleDialog(true, "EDIT", row)}
-                        className={
-                          row.deficit < 0 ? classes.deficit : classes.surplus
-                        }
-                      >
+                        onClick={() => handleDialog(true, 'EDIT', row)}
+                        className={row.deficit < 0 ? classes.deficit : classes.surplus}>
                         <TableCell component="th" scope="row">
                           {row.date}
                         </TableCell>
-                        <TableCell align="left">
-                          {row.caloriesConsumed}
-                        </TableCell>
+                        <TableCell align="left">{row.caloriesConsumed}</TableCell>
                         <TableCell align="left">{row.caloriesBurned}</TableCell>
                         <TableCell align="left">{row.deficit}</TableCell>
                         <TableCell align="left">{row.weight}</TableCell>
@@ -96,8 +87,8 @@ export const CaloriesPage: FC = () => {
                 rowsPerPage={state.pagination.perPage}
                 page={state.pagination.currentPage - 1}
                 SelectProps={{
-                  inputProps: { "aria-label": "rows per page" },
-                  native: true,
+                  inputProps: { 'aria-label': 'rows per page' },
+                  native: true
                 }}
                 onChangePage={handleChangePage}
                 ActionsComponent={TablePaginationActions}
@@ -107,46 +98,38 @@ export const CaloriesPage: FC = () => {
           </>
         )}
       </div>
-      <CalorieAddDialog
-        dialog={dialog}
-        setDialog={handleDialog}
-        fetchData={fetchData}
-      />
-      <CalorieFilterDialog
-        filter={filter}
-        setFilter={setFilter}
-        setData={handleSetState}
-      />
+      <CalorieAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />
+      <CalorieFilterDialog filter={filter} setFilter={setFilter} setData={handleSetState} />
     </Layout>
   );
 };
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
-    width: "100%",
-    overflowX: "auto",
+    width: '100%',
+    overflowX: 'auto'
   },
   container: {
-    maxHeight: "87vh",
-    minWidth: 800,
+    maxHeight: '87vh',
+    minWidth: 800
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular,
+    fontWeight: theme.typography.fontWeightRegular
   },
   deficit: {
-    backgroundColor: "#1bfa0713",
-    cursor: "pointer",
+    backgroundColor: '#1bfa0713',
+    cursor: 'pointer'
   },
   surplus: {
-    backgroundColor: "#fd020213",
-    cursor: "pointer",
+    backgroundColor: '#fd020213',
+    cursor: 'pointer'
   },
   pagination: {
-    width: "100%",
-    justifyContent: "flex-end",
-    position: "fixed",
+    width: '100%',
+    justifyContent: 'flex-end',
+    position: 'fixed',
     bottom: 0,
-    left: 0,
-  },
+    left: 0
+  }
 }));

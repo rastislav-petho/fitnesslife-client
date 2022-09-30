@@ -5,13 +5,13 @@ import {
   makeStyles,
   Paper,
   TextField,
-  Typography,
-} from "@material-ui/core";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
-import { useApi } from "../api/useApi";
-import { Register } from "../helpers/types";
+  Typography
+} from '@material-ui/core';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { useApi } from '../api/useApi';
+import { Register } from '../helpers/types';
 
 export const RegisterPage = () => {
   const classes = useStyles();
@@ -23,7 +23,7 @@ export const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
+    getValues
   } = useForm<Register>();
 
   const onSubmit = async (data: Register) => {
@@ -41,16 +41,16 @@ export const RegisterPage = () => {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
               <TextField
-                {...register("name", { required: true })}
+                {...register('name', { required: true })}
                 name="name"
                 variant="outlined"
                 label="Vaše meno"
                 className={classes.input}
                 error={!!errors.name}
-                helperText={errors?.name?.type === "required" && "Povinný údaj"}
+                helperText={errors?.name?.type === 'required' && 'Povinný údaj'}
               />
               <TextField
-                {...register("password", { required: true, minLength: 8 })}
+                {...register('password', { required: true, minLength: 8 })}
                 name="password"
                 type="password"
                 variant="outlined"
@@ -58,17 +58,17 @@ export const RegisterPage = () => {
                 className={classes.input}
                 error={!!errors.password}
                 helperText={
-                  errors?.password?.type === "required"
-                    ? "Povinný údaj"
-                    : errors?.password?.type === "minLength" &&
-                      "Heslo musí obsahovať minimálne 8 znakov"
+                  errors?.password?.type === 'required'
+                    ? 'Povinný údaj'
+                    : errors?.password?.type === 'minLength' &&
+                      'Heslo musí obsahovať minimálne 8 znakov'
                 }
               />
               <TextField
-                {...register("passwordAgain", {
+                {...register('passwordAgain', {
                   required: true,
                   minLength: 8,
-                  validate: (value) => value === getValues("password"),
+                  validate: (value) => value === getValues('password')
                 })}
                 name="passwordAgain"
                 type="password"
@@ -77,38 +77,33 @@ export const RegisterPage = () => {
                 className={classes.input}
                 error={!!errors.passwordAgain}
                 helperText={
-                  errors?.passwordAgain?.type === "required"
-                    ? "Povinný údaj"
-                    : errors?.passwordAgain?.type === "validate" &&
-                      "Heslá sa nerovnajú"
+                  errors?.passwordAgain?.type === 'required'
+                    ? 'Povinný údaj'
+                    : errors?.passwordAgain?.type === 'validate' && 'Heslá sa nerovnajú'
                 }
               />
               <TextField
-                {...register("email", { required: true })}
+                {...register('email', { required: true })}
                 name="email"
                 variant="outlined"
                 label="E-mail"
                 className={classes.input}
                 error={!!errors.email}
-                helperText={
-                  errors?.email?.type === "required" && "Povinný údaj"
-                }
+                helperText={errors?.email?.type === 'required' && 'Povinný údaj'}
               />
               <Button
                 type="submit"
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                disabled={loading}
-              >
+                disabled={loading}>
                 Zaregistrovať
               </Button>
               <Button
                 type="button"
                 variant="text"
                 className={classes.button2}
-                onClick={() => history.push("/login")}
-              >
+                onClick={() => history.push('/login')}>
                 Prihlásiť
               </Button>
             </form>
@@ -121,48 +116,48 @@ export const RegisterPage = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    height: "100vh",
+    width: '100%',
+    height: '100vh',
     backgroundImage: 'url("/login-bg3.jpg")',
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   },
   grid: {
-    width: "100%",
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: theme.spacing(4),
-    opacity: 0.88,
+    opacity: 0.88
   },
   form: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 300,
-    height: "auto",
+    height: 'auto'
   },
   title: {
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(4)
   },
   input: {
     margin: theme.spacing(1),
-    width: "100%",
+    width: '100%'
   },
   button: {
-    width: "100%",
-    marginTop: theme.spacing(4),
+    width: '100%',
+    marginTop: theme.spacing(4)
   },
   button2: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 }));

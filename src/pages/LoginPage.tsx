@@ -5,13 +5,13 @@ import {
   Typography,
   TextField,
   Button,
-  makeStyles,
-} from "@material-ui/core";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
-import { useApi } from "../api/useApi";
-import { Login } from "../helpers/types";
+  makeStyles
+} from '@material-ui/core';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { useApi } from '../api/useApi';
+import { Login } from '../helpers/types';
 
 export const LoginPage = () => {
   const classes = useStyles();
@@ -36,14 +36,14 @@ export const LoginPage = () => {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
               <TextField
-                {...register("email")}
+                {...register('email')}
                 name="email"
                 variant="outlined"
                 label="E-mail"
                 className={classes.input}
               />
               <TextField
-                {...register("password")}
+                {...register('password')}
                 name="password"
                 type="password"
                 variant="outlined"
@@ -56,16 +56,14 @@ export const LoginPage = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                disabled={loading}
-              >
+                disabled={loading}>
                 Prihlásiť
               </Button>
               <Button
                 type="button"
                 variant="text"
                 className={classes.button2}
-                onClick={() => history.push("/register")}
-              >
+                onClick={() => history.push('/register')}>
                 Registrácia
               </Button>
             </form>
@@ -78,48 +76,48 @@ export const LoginPage = () => {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    height: "100vh",
+    width: '100%',
+    height: '100vh',
     backgroundImage: 'url("/login-bg3.jpg")',
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat'
   },
   grid: {
-    width: "100%",
-    height: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   paper: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: theme.spacing(4),
-    opacity: 0.88,
+    opacity: 0.88
   },
   form: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 300,
-    height: "auto",
+    height: 'auto'
   },
   title: {
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(4)
   },
   input: {
     margin: theme.spacing(1),
-    width: "100%",
+    width: '100%'
   },
   button: {
-    width: "100%",
-    marginTop: theme.spacing(4),
+    width: '100%',
+    marginTop: theme.spacing(4)
   },
   button2: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 }));

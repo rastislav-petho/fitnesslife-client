@@ -1,7 +1,7 @@
-import { useReducer, createContext, FC, Dispatch } from "react";
-import Cookies from "js-cookie";
-import reducer from "../reducer/reducer";
-import { Message, User } from "../helpers/types";
+import { useReducer, createContext, FC, Dispatch } from 'react';
+import Cookies from 'js-cookie';
+import reducer from '../reducer/reducer';
+import { Message, User } from '../helpers/types';
 
 type State = {
   user: User;
@@ -21,22 +21,18 @@ type ContextProviderProps = {
 };
 
 export const ContextProvider: FC<ContextProviderProps> = (props) => {
-  const user: User = Cookies.getJSON("user");
+  const user: User = Cookies.getJSON('user');
 
   const initialState: State = {
     user: user,
-    apiUrl: "http://localhost:80/api",
+    apiUrl: 'http://fitnesslife.sk/api/api',
     message: {
       type: null,
-      message: null,
-    },
+      message: null
+    }
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return (
-    <Context.Provider value={{ state, dispatch }}>
-      {props.children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>;
 };

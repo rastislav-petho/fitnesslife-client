@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { useApi } from "../../api/useApi";
-import { Calorie } from "../../helpers/types";
+import { useState, useEffect } from 'react';
+import { useApi } from '../../api/useApi';
+import { Calorie } from '../../helpers/types';
 
-export type CaloriesDialogMode = "ADD" | "EDIT";
+export type CaloriesDialogMode = 'ADD' | 'EDIT';
 
 export type CalorieDialog = {
   open: boolean;
@@ -29,16 +29,16 @@ export const useCalorie = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [dialog, setDialog] = useState<CalorieDialog>({
     open: false,
-    mode: "ADD",
+    mode: 'ADD'
   });
   const [state, setState] = useState<CaloriePageDataProps>({
     data: [],
-    pagination: { total: 0, perPage: 0, currentPage: 1 },
+    pagination: { total: 0, perPage: 0, currentPage: 1 }
   });
   const [filter, setFilter] = useState<CalorieFilter>({
-    dateFrom: "",
-    dateTo: "",
-    open: false,
+    dateFrom: '',
+    dateTo: '',
+    open: false
   });
 
   const { caloriesApi } = useApi();
@@ -47,11 +47,7 @@ export const useCalorie = () => {
     fetchData(state.pagination.currentPage);
   }, []);
 
-  const handleDialog = (
-    value: boolean,
-    mode: CaloriesDialogMode,
-    data?: Calorie
-  ) => {
+  const handleDialog = (value: boolean, mode: CaloriesDialogMode, data?: Calorie) => {
     setDialog({ open: value, mode: mode, data });
   };
 
@@ -70,10 +66,7 @@ export const useCalorie = () => {
     setLoading(false);
   };
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     fetchData(newPage + 1);
   };
   return {
@@ -86,6 +79,6 @@ export const useCalorie = () => {
     dialog,
     setFilter,
     filter,
-    state,
+    state
   };
 };
