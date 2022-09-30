@@ -7,17 +7,17 @@ import { Calorie, CalorieApi } from '../../helpers/types';
 import { fromApi, toApi } from './CaloriesMapper';
 
 export const CaloriesApi = () => {
-  const { state } = useContext(Context);
+  const { appState } = useContext(Context);
   const { enqueueSnackbar } = useSnackbar();
 
   const post = async (data: Calorie) => {
     const formatData = toApi(data);
     try {
       const response = await axios.post(
-        state.apiUrl + '/calorie',
+        appState.apiUrl + '/calorie',
         {
           ...formatData,
-          user_id: state.user.id
+          user_id: appState.user.id
         },
         { ...options }
       );
@@ -32,7 +32,7 @@ export const CaloriesApi = () => {
     const formatData = toApi(data);
     try {
       const response = await axios.patch(
-        state.apiUrl + '/calorie',
+        appState.apiUrl + '/calorie',
         { ...formatData },
         { ...options }
       );
@@ -45,7 +45,7 @@ export const CaloriesApi = () => {
 
   const list = async (page: number = 1): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/calorie/${state.user.id}`, {
+      const response = await axios.get(`${appState.apiUrl}/calorie/${appState.user.id}`, {
         ...options,
         params: {
           page: page
@@ -69,10 +69,10 @@ export const CaloriesApi = () => {
 
   const filter = async (filter: CalorieFilter): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/calorie/filter`, {
+      const response = await axios.get(`${appState.apiUrl}/calorie/filter`, {
         ...options,
         params: {
-          id: state.user.id,
+          id: appState.user.id,
           dateFrom: filter.dateFrom,
           dateTo: filter.dateTo
         }
@@ -91,7 +91,7 @@ export const CaloriesApi = () => {
   const options: AxiosRequestConfig = {
     headers: {
       Accept: 'application/json',
-      Authorization: state?.user?.token
+      Authorization: appState?.user?.token
     }
   };
 

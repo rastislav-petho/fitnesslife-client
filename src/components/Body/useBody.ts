@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useApi } from '../../api/useApi';
+import { Context } from '../../context/context';
 import { Body, DialogMode } from '../../helpers/types';
 
 export type BodyDialog = {
@@ -24,7 +25,7 @@ export type BodyFilter = {
 };
 
 export const useBody = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const { appState, dispatch } = useContext(Context);
   const [dialog, setDialog] = useState<BodyDialog>({
     open: false,
     mode: 'ADD'
@@ -54,10 +55,10 @@ export const useBody = () => {
   };
 
   const fetchData = async (page?: number) => {
-    setLoading(true);
+    dispatch({ type: 'SET_LOADING', loading: true });
     const response = await bodyApi.list(page);
     setState({ data: response.data, pagination: response.pagination });
-    setLoading(false);
+    dispatch({ type: 'SET_LOADING', loading: false });
   };
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -67,6 +68,18 @@ export const useBody = () => {
   const handleSetState = (data: Body[]) => {
     setState({ ...state, data: data });
   };
+
+  const columns = [
+    { label: 'Dátum', align: 'left' },
+    { label: 'Krk', align: 'left' },
+    { label: 'Hrudník', align: 'left' },
+    { label: 'Ruky', align: 'left' },
+    { label: 'Predlaktia', align: 'left' },
+    { label: 'Brucho', align: 'left' },
+    { label: 'Pás', align: 'left' },
+    { label: 'Stehná', align: 'left' },
+    { label: 'Lýtka', align: 'left' }
+  ];
 
   return {
     handleSetState,
@@ -78,7 +91,7 @@ export const useBody = () => {
     setFilter,
     state,
     dialog,
-    loading,
-    setLoading
+    loading: appState.loading,
+    columns
   };
 };

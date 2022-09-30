@@ -1,24 +1,31 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Context } from '../../context/context';
 import { Login, Register } from '../../helpers/types';
 
 export const AuthApi = () => {
-  const { state, dispatch } = useContext(Context);
+  const { appState, dispatch } = useContext(Context);
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const login = async (data: Login) => {
     try {
-      const response = await axios.post(state.apiUrl + '/login', {
+      dispatch({ type: 'SET_LOADING', loading: true });
+      const response = await axios.post(appState.apiUrl + '/login', {
         ...data
       });
 
       if (response.status === 200) {
         Cookies.set('user', response.data);
         dispatch({ type: 'LOGIN', user: response.data });
+        dispatch({ type: 'SET_LOADING', loading: false });
         history.push('/');
+      } else if (response.status === 203) {
+        enqueueSnackbar('Nesprávne prihlasovacie údaje.', { variant: 'warning' });
+        dispatch({ type: 'SET_LOADING', loading: false });
       }
       return response;
     } catch (error) {
@@ -28,7 +35,7 @@ export const AuthApi = () => {
 
   const register = async (data: Register): Promise<any> => {
     try {
-      const response = await axios.post(state.apiUrl + '/register', {
+      const response = await axios.post(appState.apiUrl + '/register', {
         ...data
       });
       if (response.status === 200) {

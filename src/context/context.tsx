@@ -1,16 +1,16 @@
 import { useReducer, createContext, FC, Dispatch } from 'react';
 import Cookies from 'js-cookie';
 import reducer from '../reducer/reducer';
-import { Message, User } from '../helpers/types';
+import { User } from '../helpers/types';
 
 type State = {
   user: User;
-  message: Message;
+  loading: boolean;
   apiUrl: string;
 };
 
 interface IStateContext {
-  state: State;
+  appState: State;
   dispatch: Dispatch<any>;
 }
 
@@ -25,14 +25,12 @@ export const ContextProvider: FC<ContextProviderProps> = (props) => {
 
   const initialState: State = {
     user: user,
+    //apiUrl: 'http://localhost/api',
     apiUrl: 'http://fitnesslife.sk/api/api',
-    message: {
-      type: null,
-      message: null
-    }
+    loading: false
   };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [appState, dispatch] = useReducer(reducer, initialState);
 
-  return <Context.Provider value={{ state, dispatch }}>{props.children}</Context.Provider>;
+  return <Context.Provider value={{ appState, dispatch }}>{props.children}</Context.Provider>;
 };

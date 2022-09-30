@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useApi } from '../../api/useApi';
+import { Context } from '../../context/context';
 import { Calorie, DialogMode } from '../../helpers/types';
 
 export type CalorieDialog = {
@@ -24,7 +25,7 @@ export type CaloriePageDataProps = {
 };
 
 export const useCalorie = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const { appState, dispatch } = useContext(Context);
   const [dialog, setDialog] = useState<CalorieDialog>({
     open: false,
     mode: 'ADD'
@@ -58,25 +59,36 @@ export const useCalorie = () => {
   };
 
   const fetchData = async (page?: number) => {
-    setLoading(true);
+    dispatch({ type: 'SET_LOADING', loading: true });
     const response = await caloriesApi.list(page);
     setState({ data: response.data, pagination: response.pagination });
-    setLoading(false);
+    dispatch({ type: 'SET_LOADING', loading: false });
   };
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     fetchData(newPage + 1);
   };
+
+  const columns = [
+    { label: 'Dátum' },
+    { label: 'Prijaté kalórie (kcal)' },
+    { label: 'Splálené kalórie (kcal)' },
+    { label: 'Deficit (kcal)' },
+    { label: 'Hmotnosť (kg)' },
+    { label: 'Ppoznámky' }
+  ];
+
   return {
     handleDialog,
     handleChangePage,
     fetchData,
     handleFilterOpen,
     handleSetState,
-    loading,
+    loading: appState.loading,
     dialog,
     setFilter,
     filter,
-    state
+    state,
+    columns
   };
 };

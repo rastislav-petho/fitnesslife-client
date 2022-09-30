@@ -28,8 +28,13 @@ export const BodyPage: FC = () => {
     dialog,
     fetchData,
     filter,
-    setFilter
+    setFilter,
+    columns
   } = useBody();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Layout
@@ -37,83 +42,57 @@ export const BodyPage: FC = () => {
       handleDialogOpen={handleDialog}
       hadleFilterOpen={handleFilterOpen}>
       <div>
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            <Paper className={classes.root}>
-              <TableContainer className={classes.container}>
-                <Table aria-label="sticky pagination table" stickyHeader>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell className={classes.heading}>Dátum</TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Krk (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Hrudník (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Ruky (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Predlaktia (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Brucho (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Pás (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Stehná (cm)
-                      </TableCell>
-                      <TableCell className={classes.heading} align="left">
-                        Lýtka (cm)
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {state.data.map((row: any) => (
-                      <TableRow
-                        key={row.id}
-                        onClick={() => handleDialog(true, 'EDIT', row)}
-                        className={classes.row}>
-                        <TableCell component="th" scope="row">
-                          {formatDate(row.date)}
-                        </TableCell>
-                        <TableCell align="left">{row.neck}</TableCell>
-                        <TableCell align="left">{row.chest}</TableCell>
-                        <TableCell align="left">{row.arm}</TableCell>
-                        <TableCell align="left">{row.forearm}</TableCell>
-                        <TableCell align="left">{row.belly}</TableCell>
-                        <TableCell align="left">{row.belt}</TableCell>
-                        <TableCell align="left">{row.thigh}</TableCell>
-                        <TableCell align="left">{row.calf}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
-            {/* @ts-ignore */}
-            {!filter.dateFrom && !filter.dateTo && (
-              <TablePagination
-                rowsPerPageOptions={[]}
-                component="div"
-                count={state.pagination.total}
-                rowsPerPage={state.pagination.perPage}
-                page={state.pagination.currentPage - 1}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
-                  native: true
-                }}
-                onChangePage={handleChangePage}
-                ActionsComponent={TablePaginationActions}
-                className={classes.pagination}
-              />
-            )}
-          </>
+        <Paper className={classes.root}>
+          <TableContainer className={classes.container}>
+            <Table aria-label="sticky pagination table" stickyHeader>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column, key) => (
+                    <TableCell key={key} className={classes.heading}>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {state.data.map((row: any) => (
+                  <TableRow
+                    key={row.id}
+                    onClick={() => handleDialog(true, 'EDIT', row)}
+                    className={classes.row}>
+                    <TableCell component="th" scope="row">
+                      {formatDate(row.date)}
+                    </TableCell>
+                    <TableCell align="left">{row.neck}</TableCell>
+                    <TableCell align="left">{row.chest}</TableCell>
+                    <TableCell align="left">{row.arm}</TableCell>
+                    <TableCell align="left">{row.forearm}</TableCell>
+                    <TableCell align="left">{row.belly}</TableCell>
+                    <TableCell align="left">{row.belt}</TableCell>
+                    <TableCell align="left">{row.thigh}</TableCell>
+                    <TableCell align="left">{row.calf}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+        {/* @ts-ignore */}
+        {!filter.dateFrom && !filter.dateTo && (
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={state.pagination.total}
+            rowsPerPage={state.pagination.perPage}
+            page={state.pagination.currentPage - 1}
+            SelectProps={{
+              inputProps: { 'aria-label': 'rows per page' },
+              native: true
+            }}
+            onChangePage={handleChangePage}
+            ActionsComponent={TablePaginationActions}
+            className={classes.pagination}
+          />
         )}
       </div>
       <BodyAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />

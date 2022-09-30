@@ -6,16 +6,16 @@ import { Context } from '../../context/context';
 import { Body } from '../../helpers/types';
 
 export const BodyApi = () => {
-  const { state } = useContext(Context);
+  const { appState, dispatch } = useContext(Context);
   const { enqueueSnackbar } = useSnackbar();
 
   const post = async (data: Body) => {
     try {
       const response = await axios.post(
-        state.apiUrl + '/body',
+        appState.apiUrl + '/body',
         {
           ...data,
-          user_id: state.user.id
+          user_id: appState.user.id
         },
         { ...options }
       );
@@ -28,7 +28,7 @@ export const BodyApi = () => {
 
   const update = async (data: Body) => {
     try {
-      const response = await axios.patch(state.apiUrl + '/body', { ...data }, { ...options });
+      const response = await axios.patch(appState.apiUrl + '/body', { ...data }, { ...options });
       return response;
     } catch (error) {
       enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
@@ -38,7 +38,7 @@ export const BodyApi = () => {
 
   const list = async (page: number = 1): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/body/${state.user.id}`, {
+      const response = await axios.get(`${appState.apiUrl}/body/${appState.user.id}`, {
         ...options,
         params: {
           page: page
@@ -62,10 +62,10 @@ export const BodyApi = () => {
 
   const filter = async (filter: BodyFilter): Promise<any> => {
     try {
-      const response = await axios.get(`${state.apiUrl}/body/filter`, {
+      const response = await axios.get(`${appState.apiUrl}/body/filter`, {
         ...options,
         params: {
-          id: state.user.id,
+          id: appState.user.id,
           dateFrom: filter.dateFrom,
           dateTo: filter.dateTo
         }
@@ -80,7 +80,7 @@ export const BodyApi = () => {
   const options: AxiosRequestConfig = {
     headers: {
       Accept: 'application/json',
-      Authorization: state?.user?.token
+      Authorization: appState?.user?.token
     }
   };
 

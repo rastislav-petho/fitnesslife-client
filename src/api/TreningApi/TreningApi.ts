@@ -4,13 +4,13 @@ import { Context } from '../../context/context';
 import { Trening } from '../../helpers/types';
 
 export const TreningApi = () => {
-  const { state } = useContext(Context);
+  const { appState } = useContext(Context);
 
   const post = async (data: Trening) => {
     try {
       const response = await axios.post(
-        state.apiUrl + '/trening/',
-        { ...data, userId: state.user.id },
+        appState.apiUrl + '/trening/',
+        { ...data, userId: appState.user.id },
         { ...options }
       );
       return response;
@@ -21,7 +21,7 @@ export const TreningApi = () => {
 
   const list = async () => {
     try {
-      const response = await axios.get(state.apiUrl + '/trening/', {
+      const response = await axios.get(appState.apiUrl + '/trening/', {
         ...options
       });
       return response;
@@ -33,7 +33,7 @@ export const TreningApi = () => {
   const options: AxiosRequestConfig = {
     headers: {
       Accept: 'application/json',
-      Authorization: state?.user?.token
+      Authorization: appState?.user?.token
     }
   };
 

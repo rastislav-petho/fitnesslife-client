@@ -7,22 +7,22 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useApi } from '../api/useApi';
+import { Context } from '../context/context';
 import { Login } from '../helpers/types';
 
 export const LoginPage = () => {
   const classes = useStyles();
   const { authApi } = useApi();
   const history = useHistory();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { appState } = useContext(Context);
 
   const { register, handleSubmit } = useForm<Login>();
 
   const onSubmit = async (data: Login) => {
-    setLoading(true);
     await authApi.login(data);
   };
 
@@ -56,7 +56,7 @@ export const LoginPage = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                disabled={loading}>
+                disabled={appState.loading}>
                 Prihlásiť
               </Button>
               <Button

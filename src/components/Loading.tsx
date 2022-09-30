@@ -16,7 +16,7 @@ export const Loading: FC = () => {
         height: '100%',
         backgroundColor: '#ffffff98'
       }}>
-      <ReactLoading type={'spinningBubbles'} color="#f50057" height={'100px'} width={'100px'} />
+      <ReactLoading type={'spinningBubbles'} color="#7E56AC" height={'100px'} width={'100px'} />
     </div>
   );
 };

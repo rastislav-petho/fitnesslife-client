@@ -5,11 +5,6 @@ export type User = {
   token: string;
 };
 
-export type Message = {
-  type: 'success' | 'danger' | 'warning' | 'info' | null;
-  message: string | null;
-};
-
 export type CalorieApi = {
   id?: number;
   date: string;

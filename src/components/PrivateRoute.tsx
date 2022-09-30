@@ -3,13 +3,13 @@ import { Redirect, Route } from 'react-router-dom';
 import { Context } from '../context/context';
 
 export const PrivateRoute: FC<any> = ({ component: Component, ...rest }) => {
-  const { state } = useContext(Context);
+  const { appState } = useContext(Context);
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        state?.user?.token ? (
+        appState?.user?.token ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
