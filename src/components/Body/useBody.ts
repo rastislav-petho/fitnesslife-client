@@ -71,27 +71,25 @@ export const useBody = () => {
 
   const columns = [
     { label: 'Dátum', align: 'left' },
-    { label: 'Krk', align: 'left' },
-    { label: 'Hrudník', align: 'left' },
-    { label: 'Ruky', align: 'left' },
-    { label: 'Predlaktia', align: 'left' },
-    { label: 'Brucho', align: 'left' },
     { label: 'Pás', align: 'left' },
+    { label: 'Boky', align: 'left' },
+    { label: 'Zadok', align: 'left' },
+    { label: 'Hrudník', align: 'left' },
+    { label: 'Biceps', align: 'left' },
     { label: 'Stehná', align: 'left' },
-    { label: 'Lýtka', align: 'left' }
+    { label: 'Lýtka', align: 'left' },
+    { label: 'Predlaktia', align: 'left' },
+    { label: 'Krk', align: 'left' }
   ];
 
   return {
-    handleSetState,
     handleChangePage,
     fetchData,
-    handleFilterOpen,
-    handleDialog,
-    filter,
-    setFilter,
+    columns,
     state,
-    dialog,
-    loading: appState.loading,
-    columns
+    handleSetState,
+    dialog: { handleDialog, dialog },
+    filter: { filter, setFilter, handleFilterOpen },
+    loading: appState.loading
   };
 };

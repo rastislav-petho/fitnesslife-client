@@ -92,7 +92,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
-            v0.0.4
+            v0.0.5
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

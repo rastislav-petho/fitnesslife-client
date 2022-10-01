@@ -11,6 +11,8 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { BodyAddDialog, BodyFilterDialog, useBody } from '../components/Body';
 import { formatDate } from '../helpers/helpers';
@@ -18,19 +20,8 @@ import { formatDate } from '../helpers/helpers';
 export const BodyPage: FC = () => {
   const classes = useStyles();
 
-  const {
-    handleDialog,
-    handleFilterOpen,
-    loading,
-    state,
-    handleSetState,
-    handleChangePage,
-    dialog,
-    fetchData,
-    filter,
-    setFilter,
-    columns
-  } = useBody();
+  const { loading, state, handleSetState, handleChangePage, dialog, filter, fetchData, columns } =
+    useBody();
 
   if (loading) {
     return <Loading />;
@@ -39,8 +30,8 @@ export const BodyPage: FC = () => {
   return (
     <Layout
       title="Veľkosti tela"
-      handleDialogOpen={handleDialog}
-      hadleFilterOpen={handleFilterOpen}>
+      handleDialogOpen={dialog.handleDialog}
+      hadleFilterOpen={filter.handleFilterOpen}>
       <div>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
@@ -55,24 +46,147 @@ export const BodyPage: FC = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {state.data.map((row: any) => (
-                  <TableRow
-                    key={row.id}
-                    onClick={() => handleDialog(true, 'EDIT', row)}
-                    className={classes.row}>
-                    <TableCell component="th" scope="row">
-                      {formatDate(row.date)}
-                    </TableCell>
-                    <TableCell align="left">{row.neck}</TableCell>
-                    <TableCell align="left">{row.chest}</TableCell>
-                    <TableCell align="left">{row.arm}</TableCell>
-                    <TableCell align="left">{row.forearm}</TableCell>
-                    <TableCell align="left">{row.belly}</TableCell>
-                    <TableCell align="left">{row.belt}</TableCell>
-                    <TableCell align="left">{row.thigh}</TableCell>
-                    <TableCell align="left">{row.calf}</TableCell>
-                  </TableRow>
-                ))}
+                {state.data.map((row: any, key) => {
+                  // TODO presunut do useBody
+                  let arm;
+                  let belt;
+                  let belly;
+                  let ass;
+                  let chest;
+                  let thigh;
+                  let calf;
+                  let forearm;
+                  let neck;
+                  if (key + 1 < state.data.length) {
+                    if (row.arm < state.data[key + 1].arm) arm = true;
+                    else arm = false;
+
+                    if (row.belt < state.data[key + 1].belt) belt = true;
+                    else belt = false;
+
+                    if (row.belly < state.data[key + 1].belly) belly = true;
+                    else belly = false;
+
+                    if (row.ass < state.data[key + 1].ass) ass = true;
+                    else ass = false;
+
+                    if (row.chest < state.data[key + 1].chest) chest = true;
+                    else chest = false;
+
+                    if (row.thigh < state.data[key + 1].thigh) thigh = true;
+                    else thigh = false;
+
+                    if (row.calf < state.data[key + 1].calf) calf = true;
+                    else calf = false;
+
+                    if (row.forearm < state.data[key + 1].forearm) forearm = true;
+                    else forearm = false;
+
+                    if (row.neck < state.data[key + 1].neck) neck = true;
+                    else neck = false;
+                  }
+
+                  return (
+                    <TableRow
+                      key={row.id}
+                      onClick={() => dialog.handleDialog(true, 'EDIT', row)}
+                      className={classes.row}>
+                      <TableCell component="th" scope="row">
+                        {formatDate(row.date)}
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.belt}{' '}
+                          {belt ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.belly}{' '}
+                          {belly ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.ass}{' '}
+                          {ass ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.chest}{' '}
+                          {chest ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.arm}{' '}
+                          {arm ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.thigh}{' '}
+                          {thigh ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.calf}{' '}
+                          {calf ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.forearm}{' '}
+                          {forearm ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.column}>
+                          {row.neck}{' '}
+                          {neck ? (
+                            <ArrowDropDownIcon style={{ color: 'green' }} />
+                          ) : (
+                            <ArrowDropUpIcon style={{ color: 'red' }} />
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
@@ -95,8 +209,12 @@ export const BodyPage: FC = () => {
           />
         )}
       </div>
-      <BodyAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />
-      <BodyFilterDialog filter={filter} setFilter={setFilter} setData={handleSetState} />
+      <BodyAddDialog dialog={dialog.dialog} setDialog={dialog.handleDialog} fetchData={fetchData} />
+      <BodyFilterDialog
+        filter={filter.filter}
+        setFilter={filter.setFilter}
+        setData={handleSetState}
+      />
     </Layout>
   );
 };
@@ -116,6 +234,11 @@ const useStyles = makeStyles((theme: any) => ({
   },
   row: {
     cursor: 'pointer'
+  },
+  column: {
+    display: 'flex',
+    alignItems: 'center',
+    width: 25
   },
   pagination: {
     width: '100%',

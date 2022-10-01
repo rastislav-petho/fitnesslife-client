@@ -6,7 +6,7 @@ import { Context } from '../../context/context';
 import { Body } from '../../helpers/types';
 
 export const BodyApi = () => {
-  const { appState, dispatch } = useContext(Context);
+  const { appState } = useContext(Context);
   const { enqueueSnackbar } = useSnackbar();
 
   const post = async (data: Body) => {

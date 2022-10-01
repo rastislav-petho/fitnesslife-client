@@ -29,25 +29,40 @@ type CalorieAddDialogProps = {
   fetchData: (page?: number) => void;
 };
 
+type CalorieAddDialogFormType = {
+  date: string;
+  caloriesConsumed: number | null;
+  caloriesBurned: number | null;
+  deficit: number | null;
+  weight: number | null;
+  notes: string;
+};
+
 const defaultValues = {
   date: '',
-  caloriesConsumed: 0,
-  caloriesBurned: 0,
-  deficit: 0,
-  weight: 0,
+  caloriesConsumed: null,
+  caloriesBurned: null,
+  deficit: null,
+  weight: null,
   notes: ''
 };
+
 export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
   const classes = useStyles();
   const { caloriesApi } = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { dialog, setDialog, fetchData } = props;
 
-  const [data, setData] = useState<Calorie>(defaultValues);
+  const [data, setData] = useState<CalorieAddDialogFormType>(defaultValues);
 
   useEffect(() => {
     if (dialog.data) {
-      setData({ ...dialog.data, date: formatDateToField(dialog.data.date) });
+      setData({
+        ...dialog.data,
+        date: formatDateToField(dialog.data.date)
+      } as CalorieAddDialogFormType);
+    } else {
+      setData(defaultValues);
     }
   }, [dialog.data]);
 
@@ -57,7 +72,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
 
   const handleSubmit = async () => {
     if (dialog.mode === 'ADD') {
-      const result = await caloriesApi.post(data);
+      const result = await caloriesApi.post(data as Calorie);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
@@ -68,7 +83,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
     }
 
     if (dialog.mode === 'EDIT') {
-      const result = await caloriesApi.update(data);
+      const result = await caloriesApi.update(data as Calorie);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
           variant: 'success'

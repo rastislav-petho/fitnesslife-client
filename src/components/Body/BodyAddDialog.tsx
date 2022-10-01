@@ -29,16 +29,29 @@ type BodyAddDialogProps = {
   fetchData: (page?: number) => void;
 };
 
+type BodyAddDialogFormType = {
+  arm: number | null;
+  neck: number | null;
+  belt: number | null;
+  belly: number | null;
+  ass: number | null;
+  forearm: number | null;
+  calf: number | null;
+  thigh: number | null;
+  chest: number | null;
+  date: string;
+};
+
 const defaultValues = {
-  arm: 0,
-  neck: 0,
-  belt: 0,
-  belly: 0,
-  ass: 0,
-  forearm: 0,
-  calf: 0,
-  thigh: 0,
-  chest: 0,
+  arm: null,
+  neck: null,
+  belt: null,
+  belly: null,
+  ass: null,
+  forearm: null,
+  calf: null,
+  thigh: null,
+  chest: null,
   date: ''
 };
 
@@ -48,11 +61,13 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const { dialog, setDialog, fetchData } = props;
 
-  const [data, setData] = useState<Body>(defaultValues);
+  const [data, setData] = useState<BodyAddDialogFormType>(defaultValues);
 
   useEffect(() => {
     if (dialog.data) {
       setData(dialog.data);
+    } else {
+      setData(defaultValues);
     }
   }, [dialog.data]);
 
@@ -62,7 +77,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
 
   const handleSubmit = async () => {
     if (dialog.mode === 'ADD') {
-      const result = await bodyApi.post(data);
+      const result = await bodyApi.post(data as Body);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
@@ -73,7 +88,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
     }
 
     if (dialog.mode === 'EDIT') {
-      const result = await bodyApi.update(data);
+      const result = await bodyApi.update(data as Body);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
           variant: 'success'
@@ -170,7 +185,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
               <Grid item xs={12}>
                 <TextField
                   name="belly"
-                  label="Brucho"
+                  label="Boky"
                   variant="outlined"
                   type="number"
                   onChange={handleChange}
