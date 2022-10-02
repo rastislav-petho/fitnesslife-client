@@ -40,7 +40,7 @@ export const useCalorie = () => {
     open: false
   });
 
-  const { caloriesApi } = useApi();
+  const { calories } = useApi();
 
   useEffect(() => {
     fetchData(state.pagination.currentPage);
@@ -60,7 +60,7 @@ export const useCalorie = () => {
 
   const fetchData = async (page?: number) => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const response = await caloriesApi.list(page);
+    const response = await calories.list(page);
     setState({ data: response.data, pagination: response.pagination });
     dispatch({ type: 'SET_LOADING', loading: false });
   };

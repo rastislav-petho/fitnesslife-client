@@ -31,7 +31,7 @@ type LayoutProps = {
 export const Layout: FC<LayoutProps> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { authApi } = useApi();
+  const { auth } = useApi();
   const [open, setOpen] = useState<boolean>(false);
 
   const { title, handleDialogOpen, hadleFilterOpen } = props;
@@ -123,7 +123,7 @@ export const Layout: FC<LayoutProps> = (props) => {
               <ListItemText primary="Veľkosti tela" />
             </ListItem>
           </Link>
-          <ListItem button onClick={() => authApi.logout()}>
+          <ListItem button onClick={() => auth.logout()}>
             <ListItemIcon>
               <ExitToAppIcon className={classes.icon} />
             </ListItemIcon>

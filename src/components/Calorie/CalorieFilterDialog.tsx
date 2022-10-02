@@ -31,7 +31,7 @@ type CalorieFilterDialogProps = {
 export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
   const classes = useStyles();
   const { dispatch } = useContext(Context);
-  const { caloriesApi } = useApi();
+  const { calories } = useApi();
   const { filter, setFilter, setData } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
 
   const handleSubmit = async () => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const result = await caloriesApi.filter(filter);
+    const result = await calories.filter(filter);
     if (result.status === 200) {
       setData(result.data);
       setFilter({ ...filter, open: false });

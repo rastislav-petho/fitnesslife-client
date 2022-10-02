@@ -6,10 +6,10 @@ import { TreningApi } from './TreningApi';
 
 export const useApi = () => {
   return {
-    caloriesApi: CaloriesApi(),
-    treningApi: TreningApi(),
-    bodyApi: BodyApi(),
-    partiesApi: PartiesApi(),
-    authApi: AuthApi()
+    calories: CaloriesApi(),
+    trening: TreningApi(),
+    body: BodyApi(),
+    parties: PartiesApi(),
+    auth: AuthApi()
   };
 };

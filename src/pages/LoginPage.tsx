@@ -16,14 +16,14 @@ import { Login } from '../helpers/types';
 
 export const LoginPage = () => {
   const classes = useStyles();
-  const { authApi } = useApi();
+  const { auth } = useApi();
   const history = useHistory();
   const { appState } = useContext(Context);
 
   const { register, handleSubmit } = useForm<Login>();
 
   const onSubmit = async (data: Login) => {
-    await authApi.login(data);
+    await auth.login(data);
   };
 
   return (
