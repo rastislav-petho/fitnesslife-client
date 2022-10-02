@@ -43,6 +43,28 @@ export type Body = {
 
 export type Trening = {};
 
+export type PartiesType = {
+  id: number;
+  name: string;
+  code: 'SHOULDERS' | 'BICEPS' | 'TRICEPS' | 'CHEST' | 'LEGS' | 'BELLY' | 'HIPS' | 'HIPS';
+};
+
+export type PartiesApiType = PartiesType;
+
+export type PartiesVariantType = {
+  id: number;
+  partiesId: number;
+  name: string;
+  code: string;
+};
+
+export type PartiesVariantApiType = {
+  id: number;
+  parties_id: number;
+  name: string;
+  code: string;
+};
+
 export type Register = {
   name: string;
   password: string;
