@@ -21,6 +21,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
 import { useApi } from '../api/useApi';
 import { DialogMode } from '../helpers/types';
+import { APP_VERSION } from '../helpers/constants';
 
 type LayoutProps = {
   title: string;
@@ -91,7 +92,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
-            v0.0.6
+            {APP_VERSION}
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

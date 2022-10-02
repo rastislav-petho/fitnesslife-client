@@ -25,8 +25,8 @@ export const ContextProvider: FC<ContextProviderProps> = (props) => {
 
   const initialState: State = {
     user: user,
-    apiUrl: 'http://localhost/api',
-    //apiUrl: 'http://fitnesslife.sk/api/api',
+    //apiUrl: 'http://localhost/api',
+    apiUrl: 'http://fitnesslife.sk/api/api',
     loading: false
   };
 
