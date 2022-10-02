@@ -35,11 +35,15 @@ export const AuthApi = () => {
 
   const register = async (data: Register): Promise<any> => {
     try {
+      dispatch({ type: 'SET_LOADING', loading: true });
       const response = await axios.post(appState.apiUrl + '/register', {
         ...data
       });
       if (response.status === 200) {
         history.push('/login');
+      } else if (response.status === 203) {
+        enqueueSnackbar('Emailová adresa sa už používa.', { variant: 'warning' });
+        dispatch({ type: 'SET_LOADING', loading: false });
       }
       return response;
     } catch (error) {

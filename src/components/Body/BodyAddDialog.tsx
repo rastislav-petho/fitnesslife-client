@@ -12,7 +12,6 @@ import { TransitionProps } from '@material-ui/core/transitions';
 import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
 import { Body, DialogMode } from '../../helpers/types';
-import { formatDateToField } from '../../helpers/helpers';
 import { useSnackbar } from 'notistack';
 import { BodyDialog } from './useBody';
 

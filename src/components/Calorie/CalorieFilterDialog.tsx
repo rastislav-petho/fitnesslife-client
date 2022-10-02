@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,6 +13,7 @@ import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
 import { Calorie } from '../../helpers/types';
 import { CalorieFilter } from './useCalorie';
+import { Context } from '../../context/context';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -29,6 +30,7 @@ type CalorieFilterDialogProps = {
 
 export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
   const classes = useStyles();
+  const { dispatch } = useContext(Context);
   const { caloriesApi } = useApi();
   const { filter, setFilter, setData } = props;
 
@@ -37,10 +39,12 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
   };
 
   const handleSubmit = async () => {
+    dispatch({ type: 'SET_LOADING', loading: true });
     const result = await caloriesApi.filter(filter);
     if (result.status === 200) {
       setData(result.data);
       setFilter({ ...filter, open: false });
+      dispatch({ type: 'SET_LOADING', loading: false });
     }
   };
 

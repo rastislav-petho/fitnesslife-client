@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100vh',
-    backgroundImage: 'url("/login-bg3.jpg")',
+    backgroundImage: 'url("/login-bg.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'

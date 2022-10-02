@@ -158,7 +158,7 @@ const useStyles = makeStyles((theme: any) => ({
     opacity: 0.88
   },
   accordion: {
-    backgroundImage: 'url("/login-bg3.jpg")',
+    backgroundImage: 'url("/login-bg.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'

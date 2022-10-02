@@ -75,7 +75,7 @@ export const useCalorie = () => {
     { label: 'Splálené kalórie (kcal)' },
     { label: 'Deficit (kcal)' },
     { label: 'Hmotnosť (kg)' },
-    { label: 'Ppoznámky' }
+    { label: 'Poznámky' }
   ];
 
   return {

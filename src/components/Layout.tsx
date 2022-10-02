@@ -15,7 +15,6 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
-import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -92,7 +91,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
-            v0.0.5
+            v0.0.6
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

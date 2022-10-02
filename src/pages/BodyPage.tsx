@@ -27,6 +27,7 @@ export const BodyPage: FC = () => {
     return <Loading />;
   }
 
+  const length = state.data.length;
   return (
     <Layout
       title="Veľkosti tela"
@@ -95,94 +96,148 @@ export const BodyPage: FC = () => {
                         {formatDate(row.date)}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.belt}{' '}
-                          {belt ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.belt && (
+                          <div className={classes.column}>
+                            {row.belt}
+                            {key + 1 < length ? (
+                              belt ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.belly}{' '}
-                          {belly ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.belly && (
+                          <div className={classes.column}>
+                            {row.belly}
+                            {key + 1 < length ? (
+                              belly ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.ass}{' '}
-                          {ass ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.ass && (
+                          <div className={classes.column}>
+                            {row.ass}{' '}
+                            {key + 1 < length ? (
+                              ass ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.chest}{' '}
-                          {chest ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.chest && (
+                          <div className={classes.column}>
+                            {row.chest}{' '}
+                            {key + 1 < length ? (
+                              chest ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.arm}{' '}
-                          {arm ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.arm && (
+                          <div className={classes.column}>
+                            {row.arm}{' '}
+                            {key + 1 < length ? (
+                              arm ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.thigh}{' '}
-                          {thigh ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.thigh && (
+                          <div className={classes.column}>
+                            {row.thigh}{' '}
+                            {key + 1 < length ? (
+                              thigh ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.calf}{' '}
-                          {calf ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.calf && (
+                          <div className={classes.column}>
+                            {row.calf}{' '}
+                            {key + 1 < length ? (
+                              calf ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.forearm}{' '}
-                          {forearm ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.forearm && (
+                          <div className={classes.column}>
+                            {row.forearm}{' '}
+                            {key + 1 < length ? (
+                              forearm ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell align="left">
-                        <div className={classes.column}>
-                          {row.neck}{' '}
-                          {neck ? (
-                            <ArrowDropDownIcon style={{ color: 'green' }} />
-                          ) : (
-                            <ArrowDropUpIcon style={{ color: 'red' }} />
-                          )}
-                        </div>
+                        {row.neck && (
+                          <div className={classes.column}>
+                            {row.neck}{' '}
+                            {key + 1 < length ? (
+                              neck ? (
+                                <ArrowDropDownIcon style={{ color: 'green' }} />
+                              ) : (
+                                <ArrowDropUpIcon style={{ color: 'red' }} />
+                              )
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        )}
                       </TableCell>
                     </TableRow>
                   );

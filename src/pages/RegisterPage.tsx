@@ -7,17 +7,18 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import { useState } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useApi } from '../api/useApi';
+import { Context } from '../context/context';
 import { Register } from '../helpers/types';
 
 export const RegisterPage = () => {
   const classes = useStyles();
   const { authApi } = useApi();
+  const { appState } = useContext(Context);
   const history = useHistory();
-  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -27,7 +28,6 @@ export const RegisterPage = () => {
   } = useForm<Register>();
 
   const onSubmit = async (data: Register) => {
-    setLoading(true);
     await authApi.register(data);
   };
 
@@ -96,7 +96,7 @@ export const RegisterPage = () => {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                disabled={loading}>
+                disabled={appState.loading}>
                 Zaregistrovať
               </Button>
               <Button
@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     height: '100vh',
-    backgroundImage: 'url("/login-bg3.jpg")',
+    backgroundImage: 'url("/login-bg.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat'
