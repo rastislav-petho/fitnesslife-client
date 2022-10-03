@@ -15,13 +15,14 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
 import { useApi } from '../api/useApi';
 import { DialogMode } from '../helpers/types';
-import { APP_VERSION } from '../helpers/constants';
+import { config } from '../config';
 
 type LayoutProps = {
   title: string;
@@ -92,7 +93,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             Life{' '}
           </Typography>
           <Typography variant="caption" style={{ marginLeft: 8 }}>
-            {APP_VERSION}
+            {config.version}
           </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -100,6 +101,14 @@ export const Layout: FC<LayoutProps> = (props) => {
         </div>
         <Divider />
         <List>
+          <Link to="/trening" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <FitnessCenterIcon className={classes.icon} />
+              </ListItemIcon>
+              <ListItemText primary="Tréning" />
+            </ListItem>
+          </Link>
           <Link to="/" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
@@ -108,14 +117,7 @@ export const Layout: FC<LayoutProps> = (props) => {
               <ListItemText primary="Kalórie" />
             </ListItem>
           </Link>
-          {/* <Link to="/trening" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon>
-                <FitnessCenterIcon className={classes.icon} />
-              </ListItemIcon>
-              <ListItemText primary="Tréning" />
-            </ListItem>
-          </Link> */}
+
           <Link to="/body" className={classes.link}>
             <ListItem button>
               <ListItemIcon>

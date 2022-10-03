@@ -40,7 +40,7 @@ export const useCalorie = () => {
     open: false
   });
 
-  const { calories } = useApi();
+  const api = useApi();
 
   useEffect(() => {
     fetchData(state.pagination.currentPage);
@@ -60,7 +60,7 @@ export const useCalorie = () => {
 
   const fetchData = async (page?: number) => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const response = await calories.list(page);
+    const response = await api.calories.list(page);
     setState({ data: response.data, pagination: response.pagination });
     dispatch({ type: 'SET_LOADING', loading: false });
   };
@@ -72,7 +72,7 @@ export const useCalorie = () => {
   const columns = [
     { label: 'Dátum' },
     { label: 'Prijaté kalórie (kcal)' },
-    { label: 'Splálené kalórie (kcal)' },
+    { label: 'Spálené kalórie (kcal)' },
     { label: 'Deficit (kcal)' },
     { label: 'Hmotnosť (kg)' },
     { label: 'Poznámky' }

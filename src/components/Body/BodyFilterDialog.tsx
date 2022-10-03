@@ -31,7 +31,7 @@ type BodyFilterDialogProps = {
 export const BodyFilterDialog = (props: BodyFilterDialogProps) => {
   const classes = useStyles();
   const { dispatch } = useContext(Context);
-  const { body } = useApi();
+  const api = useApi();
   const { filter, setFilter, setData } = props;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ export const BodyFilterDialog = (props: BodyFilterDialogProps) => {
 
   const handleSubmit = async () => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const result = await body.filter(filter);
+    const result = await api.body.filter(filter);
     if (result.status === 200) {
       setData(result.data);
       setFilter({ ...filter, open: false });

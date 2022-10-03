@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
 import { CalorieFilter } from '../../components/Calorie/useCalorie';
+import { config } from '../../config';
 import { Context } from '../../context/context';
 import { Calorie, CalorieApi } from '../../helpers/types';
 import { fromApi, toApi } from './CaloriesMapper';
@@ -14,7 +15,7 @@ export const CaloriesApi = () => {
     const formatData = toApi(data);
     try {
       const response = await axios.post(
-        appState.apiUrl + '/calorie',
+        config.apiUrl + '/calorie',
         {
           ...formatData,
           user_id: appState.user.id
@@ -32,7 +33,7 @@ export const CaloriesApi = () => {
     const formatData = toApi(data);
     try {
       const response = await axios.patch(
-        appState.apiUrl + '/calorie',
+        config.apiUrl + '/calorie',
         { ...formatData },
         { ...options }
       );
@@ -45,7 +46,7 @@ export const CaloriesApi = () => {
 
   const list = async (page: number = 1): Promise<any> => {
     try {
-      const response = await axios.get(`${appState.apiUrl}/calorie/${appState.user.id}`, {
+      const response = await axios.get(`${config.apiUrl}/calorie/${appState.user.id}`, {
         ...options,
         params: {
           page: page
@@ -69,7 +70,7 @@ export const CaloriesApi = () => {
 
   const filter = async (filter: CalorieFilter): Promise<any> => {
     try {
-      const response = await axios.get(`${appState.apiUrl}/calorie/filter`, {
+      const response = await axios.get(`${config.apiUrl}/calorie/filter`, {
         ...options,
         params: {
           id: appState.user.id,

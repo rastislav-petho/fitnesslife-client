@@ -2,6 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
 import { BodyFilter } from '../../components/Body/useBody';
+import { config } from '../../config';
 import { Context } from '../../context/context';
 import { Body } from '../../helpers/types';
 
@@ -12,7 +13,7 @@ export const BodyApi = () => {
   const post = async (data: Body) => {
     try {
       const response = await axios.post(
-        appState.apiUrl + '/body',
+        config.apiUrl + '/body',
         {
           ...data,
           user_id: appState.user.id
@@ -28,7 +29,7 @@ export const BodyApi = () => {
 
   const update = async (data: Body) => {
     try {
-      const response = await axios.patch(appState.apiUrl + '/body', { ...data }, { ...options });
+      const response = await axios.patch(config.apiUrl + '/body', { ...data }, { ...options });
       return response;
     } catch (error) {
       enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
@@ -38,7 +39,7 @@ export const BodyApi = () => {
 
   const list = async (page: number = 1): Promise<any> => {
     try {
-      const response = await axios.get(`${appState.apiUrl}/body/${appState.user.id}`, {
+      const response = await axios.get(`${config.apiUrl}/body/${appState.user.id}`, {
         ...options,
         params: {
           page: page
@@ -62,7 +63,7 @@ export const BodyApi = () => {
 
   const filter = async (filter: BodyFilter): Promise<any> => {
     try {
-      const response = await axios.get(`${appState.apiUrl}/body/filter`, {
+      const response = await axios.get(`${config.apiUrl}/body/filter`, {
         ...options,
         params: {
           id: appState.user.id,

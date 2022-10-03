@@ -7,3 +7,7 @@ export const formatDateToField = (value: string): string => {
   const [day, month, year] = value.split('.');
   return `${year}-${month}-${day}`;
 };
+
+export const formatDecimal = (value: number | string): string => {
+  return value.toString().replace('.', ',');
+};

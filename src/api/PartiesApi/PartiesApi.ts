@@ -4,16 +4,19 @@ import { useSnackbar } from 'notistack';
 import { PartiesVariantApi } from './PartiesVariantApi';
 import { Context } from '../../context/context';
 import { PartiesApiType, PartiesType } from '../../helpers/types';
+import { config } from '../../config';
 
 export const PartiesApi = () => {
   const { appState } = useContext(Context);
   const { enqueueSnackbar } = useSnackbar();
 
-  const list = async (): Promise<AxiosResponse<PartiesType>> => {
+  const list = async (): Promise<AxiosResponse<PartiesType[]>> => {
     try {
-      const response: AxiosResponse<PartiesApiType> = await axios.get(
-        `${appState.apiUrl}/parties`,
-        { ...options }
+      const response: AxiosResponse<PartiesApiType[]> = await axios.get(
+        `${config.apiUrl}/parties`,
+        {
+          ...options
+        }
       );
       return response;
     } catch (error) {
@@ -29,5 +32,5 @@ export const PartiesApi = () => {
     }
   };
 
-  return { list, relations: { partiesVariant: PartiesVariantApi() } };
+  return { list, relatives: { partiesVariant: PartiesVariantApi() } };
 };

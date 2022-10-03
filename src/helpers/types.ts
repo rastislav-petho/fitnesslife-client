@@ -41,7 +41,7 @@ export type Body = {
   date: string;
 };
 
-export type Trening = {};
+export type TreningType = {};
 
 export type PartiesType = {
   id: number;

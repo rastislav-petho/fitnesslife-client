@@ -56,7 +56,7 @@ const defaultValues = {
 
 export const BodyAddDialog = (props: BodyAddDialogProps) => {
   const classes = useStyles();
-  const { body } = useApi();
+  const api = useApi();
   const { enqueueSnackbar } = useSnackbar();
   const { dialog, setDialog, fetchData } = props;
 
@@ -76,7 +76,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
 
   const handleSubmit = async () => {
     if (dialog.mode === 'ADD') {
-      const result = await body.post(data as Body);
+      const result = await api.body.post(data as Body);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
@@ -87,7 +87,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
     }
 
     if (dialog.mode === 'EDIT') {
-      const result = await body.update(data as Body);
+      const result = await api.body.update(data as Body);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
           variant: 'success'

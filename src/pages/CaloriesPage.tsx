@@ -19,6 +19,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import { formatDecimal } from '../helpers/helpers';
 
 export const CaloriesPage: FC = () => {
   const classes = useStyles();
@@ -36,6 +37,8 @@ export const CaloriesPage: FC = () => {
     columns
   } = useCalorie();
 
+  const showCaloriesDetail = !!filter.dateFrom && !!filter.dateTo;
+
   if (loading) {
     return <Loading />;
   }
@@ -43,9 +46,7 @@ export const CaloriesPage: FC = () => {
   return (
     <Layout title="Kalórie" handleDialogOpen={handleDialog} hadleFilterOpen={handleFilterOpen}>
       <div>
-        {filter.dateFrom && filter.dateTo && (
-          <CalorieFilterDetail data={state.data} filter={filter} />
-        )}
+        {showCaloriesDetail && <CalorieFilterDetail data={state.data} filter={filter} />}
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
             <Table aria-label="sticky pagination table" stickyHeader>
@@ -70,7 +71,7 @@ export const CaloriesPage: FC = () => {
                     <TableCell align="left">{row.caloriesConsumed}</TableCell>
                     <TableCell align="left">{row.caloriesBurned}</TableCell>
                     <TableCell align="left">{row.deficit}</TableCell>
-                    <TableCell align="left">{row.weight}</TableCell>
+                    <TableCell align="left">{formatDecimal(row.weight)}</TableCell>
                     <TableCell align="left">{row.notes}</TableCell>
                   </TableRow>
                 ))}
@@ -79,7 +80,7 @@ export const CaloriesPage: FC = () => {
           </TableContainer>
         </Paper>
         {/* @ts-ignore */}
-        {!filter.dateFrom && !filter.dateTo && (
+        {!showCaloriesDetail && (
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"

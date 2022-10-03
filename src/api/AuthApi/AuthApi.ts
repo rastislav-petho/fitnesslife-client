@@ -3,23 +3,24 @@ import Cookies from 'js-cookie';
 import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { config } from '../../config';
 import { Context } from '../../context/context';
 import { Login, Register } from '../../helpers/types';
 
 export const AuthApi = () => {
-  const { appState, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   const login = async (data: Login) => {
     try {
       dispatch({ type: 'SET_LOADING', loading: true });
-      const response = await axios.post(appState.apiUrl + '/login', {
+      const response = await axios.post(config.apiUrl + '/login', {
         ...data
       });
 
       if (response.status === 200) {
-        Cookies.set('user', response.data);
+        Cookies.set('user', response.data, { expires: 365 });
         dispatch({ type: 'LOGIN', user: response.data });
         dispatch({ type: 'SET_LOADING', loading: false });
         history.push('/');
@@ -29,6 +30,8 @@ export const AuthApi = () => {
       }
       return response;
     } catch (error) {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
+      dispatch({ type: 'SET_LOADING', loading: false });
       return Promise.reject(error);
     }
   };
@@ -36,7 +39,7 @@ export const AuthApi = () => {
   const register = async (data: Register): Promise<any> => {
     try {
       dispatch({ type: 'SET_LOADING', loading: true });
-      const response = await axios.post(appState.apiUrl + '/register', {
+      const response = await axios.post(config.apiUrl + '/register', {
         ...data
       });
       if (response.status === 200) {
@@ -47,6 +50,8 @@ export const AuthApi = () => {
       }
       return response;
     } catch (error) {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
+      dispatch({ type: 'SET_LOADING', loading: false });
       return Promise.reject(error);
     }
   };

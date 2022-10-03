@@ -40,7 +40,7 @@ export const useBody = () => {
     open: false
   });
 
-  const { body } = useApi();
+  const api = useApi();
 
   useEffect(() => {
     fetchData(state.pagination.currentPage);
@@ -56,7 +56,7 @@ export const useBody = () => {
 
   const fetchData = async (page?: number) => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const response = await body.list(page);
+    const response = await api.body.list(page);
     setState({ data: response.data, pagination: response.pagination });
     dispatch({ type: 'SET_LOADING', loading: false });
   };

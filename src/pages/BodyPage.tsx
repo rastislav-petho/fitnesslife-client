@@ -15,7 +15,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { BodyAddDialog, BodyFilterDialog, useBody } from '../components/Body';
-import { formatDate } from '../helpers/helpers';
+import { formatDate, formatDecimal } from '../helpers/helpers';
 
 export const BodyPage: FC = () => {
   const classes = useStyles();
@@ -98,7 +98,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.belt && (
                           <div className={classes.column}>
-                            {row.belt}
+                            {formatDecimal(row.belt)}
                             {key + 1 < length ? (
                               belt ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -114,7 +114,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.belly && (
                           <div className={classes.column}>
-                            {row.belly}
+                            {formatDecimal(row.belly)}
                             {key + 1 < length ? (
                               belly ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -130,7 +130,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.ass && (
                           <div className={classes.column}>
-                            {row.ass}{' '}
+                            {formatDecimal(row.ass)}{' '}
                             {key + 1 < length ? (
                               ass ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -146,7 +146,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.chest && (
                           <div className={classes.column}>
-                            {row.chest}{' '}
+                            {formatDecimal(row.chest)}{' '}
                             {key + 1 < length ? (
                               chest ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -162,7 +162,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.arm && (
                           <div className={classes.column}>
-                            {row.arm}{' '}
+                            {formatDecimal(row.arm)}{' '}
                             {key + 1 < length ? (
                               arm ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -178,7 +178,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.thigh && (
                           <div className={classes.column}>
-                            {row.thigh}{' '}
+                            {formatDecimal(row.thigh)}{' '}
                             {key + 1 < length ? (
                               thigh ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -194,7 +194,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.calf && (
                           <div className={classes.column}>
-                            {row.calf}{' '}
+                            {formatDecimal(row.calf)}{' '}
                             {key + 1 < length ? (
                               calf ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -210,7 +210,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.forearm && (
                           <div className={classes.column}>
-                            {row.forearm}{' '}
+                            {formatDecimal(row.forearm)}{' '}
                             {key + 1 < length ? (
                               forearm ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />
@@ -226,7 +226,7 @@ export const BodyPage: FC = () => {
                       <TableCell align="left">
                         {row.neck && (
                           <div className={classes.column}>
-                            {row.neck}{' '}
+                            {formatDecimal(row.neck)}{' '}
                             {key + 1 < length ? (
                               neck ? (
                                 <ArrowDropDownIcon style={{ color: 'green' }} />

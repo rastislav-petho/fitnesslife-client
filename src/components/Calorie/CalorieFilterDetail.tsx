@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Accordion,
   AccordionSummary,
@@ -16,7 +17,7 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import AssistantPhotoIcon from '@material-ui/icons/AssistantPhoto';
 import SyncIcon from '@material-ui/icons/Sync';
 import StarIcon from '@material-ui/icons/Star';
-import { formatDate } from '../../helpers/helpers';
+import { formatDate, formatDecimal } from '../../helpers/helpers';
 import { Calorie } from '../../helpers/types';
 import { CalorieFilter } from './useCalorie';
 
@@ -25,7 +26,7 @@ type CalorieFilterDetailProps = {
   filter: CalorieFilter;
 };
 
-export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
+export const CalorieFilterDetail = memo((props: CalorieFilterDetailProps) => {
   const classes = useStyles();
   const { data, filter } = props;
   const { caloriesBurnedSum, deficitSum, fat, weightSum, caloriesConsumedSum } = useCalorieDetail({
@@ -92,7 +93,7 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
               />
 
               <CardContent>
-                <div className={classes.content}>{weightSum.toFixed(2)} kg</div>
+                <div className={classes.content}>{formatDecimal(weightSum.toFixed(2))} kg</div>
               </CardContent>
             </Card>
           </Grid>
@@ -105,7 +106,7 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
               />
 
               <CardContent>
-                <div className={classes.content}>{fat.toFixed(2)} kg</div>
+                <div className={classes.content}>{formatDecimal(fat.toFixed(2))} kg</div>
               </CardContent>
             </Card>
           </Grid>
@@ -118,7 +119,9 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
               />
 
               <CardContent>
-                <div className={classes.content}>{(weightSum - fat).toFixed(2)} kg</div>
+                <div className={classes.content}>
+                  {formatDecimal((weightSum - fat).toFixed(2))} kg
+                </div>
               </CardContent>
             </Card>
           </Grid>
@@ -126,7 +129,7 @@ export const CalorieFilterDetail = (props: CalorieFilterDetailProps) => {
       </AccordionDetails>
     </Accordion>
   );
-};
+});
 
 type UseCalorieDetailProps = {
   data: Calorie[];

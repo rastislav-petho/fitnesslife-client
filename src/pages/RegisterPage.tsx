@@ -16,7 +16,7 @@ import { Register } from '../helpers/types';
 
 export const RegisterPage = () => {
   const classes = useStyles();
-  const { auth } = useApi();
+  const api = useApi();
   const { appState } = useContext(Context);
   const history = useHistory();
 
@@ -28,7 +28,7 @@ export const RegisterPage = () => {
   } = useForm<Register>();
 
   const onSubmit = async (data: Register) => {
-    await auth.register(data);
+    await api.auth.register(data);
   };
 
   return (
