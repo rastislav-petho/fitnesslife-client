@@ -12,28 +12,19 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import {
   Checkbox,
-  Collapse,
   Container,
   FormControl,
   FormControlLabel,
   FormGroup,
-  FormHelperText,
   FormLabel,
   Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  Paper,
   TextField
 } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
 import { Calorie, DialogMode, PartiesType, PartiesVariantType } from '../../helpers/types';
-import { formatDateToField } from '../../helpers/helpers';
 
 import { TreningDialog } from './useTrening';
-import { ExpandLess, ExpandMore, StarBorder } from '@material-ui/icons';
+import { ExerciseList } from './ExerciseList';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -57,6 +48,17 @@ type TreningAddDialogFormType = {
   notes: string;
 };
 
+export type TreningExerciseType = {
+  treningId?: number;
+  partiesVariantId: number;
+  partieId: number;
+  name: string;
+  reps: number;
+  series: number;
+  weight: number;
+  notes: string;
+};
+
 const defaultValues = {
   date: '',
   caloriesConsumed: null,
@@ -73,13 +75,14 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
   const { dialog, setDialog, fetchData } = props;
 
   const [data, setData] = useState<TreningAddDialogFormType>(defaultValues);
-  const [parties, setParties] = useState<PartiesType[]>();
+  const [parties, setParties] = useState<PartiesType[]>([]);
   const [partiesVariant, setPartiesVariant] = useState<PartiesVariantType[]>([]);
   const [partiesChecked, setPartiesChecked] = useState<{ id: number; checked: boolean }[]>([]);
+  const [treningExercise, setTreningExercise] = useState<TreningExerciseType[]>([]);
   const [loading, setLoading] = useState({ parties: true, partiesVariant: false });
 
   useEffect(() => {
-    if (dialog.open) {
+    if (dialog.open && parties.length === 0) {
       fetchParties();
     }
   }, [dialog.open]);
@@ -202,7 +205,12 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
                             }
                             label={partie.name}
                           />
-                          <ExerciseList partiesVariant={partiesVariant} partieId={partie.id} />
+                          <ExerciseList
+                            partiesVariant={partiesVariant}
+                            partieId={partie.id}
+                            setTreningExercise={setTreningExercise}
+                            treningExercise={treningExercise}
+                          />
                         </>
                       ))}
                     </FormGroup>
@@ -233,74 +241,9 @@ const useStyles = makeStyles((theme: Theme) =>
     input: {
       width: '100%'
     },
-    exerciseContainer: {
-      marginTop: theme.spacing(1),
-      marginBottom: theme.spacing(1)
-    },
-    exerciseInput: {
-      width: '100%'
-    },
     formControl: {
       margin: theme.spacing(0),
       width: '100%'
     }
   })
 );
-
-function ExerciseList(props: any) {
-  return (
-    <List component="nav" aria-labelledby="nested-list-subheader">
-      {props.partiesVariant.map(
-        (item: PartiesVariantType, key: number) =>
-          item.partiesId === props.partieId && (
-            <Exercise {...item} partieId={props.partieId} key={key} />
-          )
-      )}
-    </List>
-  );
-}
-
-function Exercise(props: any) {
-  const classes = useStyles();
-  const { name, code, id, partiesId } = props;
-  const [open, setOpen] = useState(false);
-  const [exercises, setExercises] = useState([{ id, name, code, partiesId }]);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  const handleAddExercise = () => {
-    setExercises([...exercises, { id, name, code, partiesId }]);
-  };
-
-  return (
-    <div>
-      <ListItem button onClick={handleClick}>
-        <ListItemText primary={name} />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={open} timeout="auto">
-        <Button variant="text" color="secondary" size="small" onClick={handleAddExercise}>
-          Pridať cvik
-        </Button>
-        <Grid container spacing={1} className={classes.exerciseContainer}>
-          {exercises.map((item, key) => (
-            <Grid item xs={12} sm={6} md={4} lg={2} key={key}>
-              <TextField
-                name={`${item.code}-${key}`}
-                label={`${key + 1}. cvik`}
-                variant="outlined"
-                type="text"
-                onChange={() => console.log(id, partiesId)}
-                InputLabelProps={{ shrink: true }}
-                className={classes.exerciseInput}
-                defaultValue=""
-              />
-            </Grid>
-          ))}
-        </Grid>
-      </Collapse>
-    </div>
-  );
-}

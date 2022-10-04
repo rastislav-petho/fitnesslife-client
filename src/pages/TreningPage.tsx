@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Layout, Loading, TreningAddDialog, useTrening } from '../components';
 import {
-  Grid,
   makeStyles,
   Paper,
   Table,
