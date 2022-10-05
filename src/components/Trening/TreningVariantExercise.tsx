@@ -7,7 +7,7 @@ import {
   Theme,
   createStyles
 } from '@material-ui/core';
-import { TreningExerciseType } from './TreningAddDialog';
+import { TreningExerciseType } from '../../helpers/types';
 
 type TreningVariantExerciseProps = {
   index: number;
@@ -22,7 +22,6 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
   const handleSeriesChange = (event: any, value: number | number[]) => {
     setTreningExercise((prevState) => {
       const newState = prevState.map((obj, key) => {
-        // 👇️ if id equals 2, update country property
         if (key === index) {
           return { ...obj, series: value as number };
         }
@@ -82,7 +81,7 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         className={classes.exerciseInput}
-        defaultValue=""
+        defaultValue={treningExercise[index].name}
       />
       <Typography variant="subtitle2" className={classes.sliderLabel}>
         Počet sérií: {treningExercise[index].series}
@@ -128,7 +127,7 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
         onChange={handleChange}
         InputLabelProps={{ shrink: true }}
         className={classes.exerciseInput}
-        defaultValue=""
+        defaultValue={treningExercise[index].notes}
       />
     </Grid>
   );

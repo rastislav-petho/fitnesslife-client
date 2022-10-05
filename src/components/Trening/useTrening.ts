@@ -43,13 +43,13 @@ export const useTrening = () => {
   });
 
   useEffect(() => {
-    fetchData(state.pagination.currentPage);
+    fetchData(state?.pagination.currentPage);
   }, []);
 
   const fetchData = async (page?: number) => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    // const response = await api.calories.list(page);
-    //setState({ data: response.data, pagination: response.pagination });
+    const response = await api.trening.list(page);
+    setState({ data: response.data, pagination: response.pagination });
     dispatch({ type: 'SET_LOADING', loading: false });
   };
 
@@ -72,10 +72,8 @@ export const useTrening = () => {
   const columns = [
     { label: 'Dátum' },
     { label: 'Trénované partie' },
-    { label: 'Celkovo sérií' },
-    { label: 'Celkovo opakovaní' },
     { label: 'Spálené kalórie' },
-    { label: 'Čas cvičenia' },
+    { label: 'Trvanie tréningu' },
     { label: 'Poznámky' }
   ];
 
@@ -88,6 +86,7 @@ export const useTrening = () => {
     handleDialog,
     filter,
     handleFilterOpen,
-    fetchData
+    fetchData,
+    handleChangePage
   };
 };

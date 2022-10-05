@@ -21,10 +21,17 @@ import {
   TextField
 } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
-import { Calorie, DialogMode, PartiesType, PartiesVariantType } from '../../helpers/types';
+import {
+  DialogMode,
+  PartiesType,
+  PartiesVariantType,
+  TreningExerciseType,
+  TreningType
+} from '../../helpers/types';
 
 import { TreningDialog } from './useTrening';
 import { ExerciseList } from './ExerciseList';
+import { formatDateToField } from '../../helpers/helpers';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -39,33 +46,14 @@ type TreningAddDialogProps = {
   fetchData: (page?: number) => void;
 };
 
-type TreningAddDialogFormType = {
-  date: string;
-  caloriesConsumed: number | null;
-  caloriesBurned: number | null;
-  deficit: number | null;
-  weight: number | null;
-  notes: string;
-};
-
-export type TreningExerciseType = {
-  treningId?: number;
-  partiesVariantId: number;
-  partieId: number;
-  name: string;
-  reps: number;
-  series: number;
-  weight: number;
-  notes: string;
-};
-
 const defaultValues = {
   date: '',
-  caloriesConsumed: null,
+  time: '',
   caloriesBurned: null,
-  deficit: null,
-  weight: null,
-  notes: ''
+  notes: '',
+  parties: [],
+  treningExercise: [],
+  partiesVariant: []
 };
 
 export const TreningAddDialog = (props: TreningAddDialogProps) => {
@@ -74,12 +62,23 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const { dialog, setDialog, fetchData } = props;
 
-  const [data, setData] = useState<TreningAddDialogFormType>(defaultValues);
+  const [trening, setTrening] = useState<TreningType>(defaultValues);
   const [parties, setParties] = useState<PartiesType[]>([]);
   const [partiesVariant, setPartiesVariant] = useState<PartiesVariantType[]>([]);
   const [partiesChecked, setPartiesChecked] = useState<{ id: number; checked: boolean }[]>([]);
   const [treningExercise, setTreningExercise] = useState<TreningExerciseType[]>([]);
   const [loading, setLoading] = useState({ parties: true, partiesVariant: false });
+
+  useEffect(() => {
+    if (dialog.data) {
+      setTrening(dialog.data);
+      setTreningExercise(dialog.data.treningExercise);
+      setPartiesChecked(dialog.data.parties.map((item) => ({ id: item.id, checked: true })));
+      setPartiesVariant(dialog.data.partiesVariant);
+    } else {
+      setTrening(defaultValues);
+    }
+  }, [dialog.data]);
 
   useEffect(() => {
     if (dialog.open && parties.length === 0) {
@@ -119,12 +118,17 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [event.target.name]: event.target.value });
+    setTrening({ ...trening, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = async () => {
+    const data = {
+      trening,
+      treningExercise
+    };
+
     if (dialog.mode === 'ADD') {
-      const result = await api.calories.post(data as Calorie);
+      const result = await api.trening.post(data);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
         fetchData();
@@ -135,7 +139,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
     }
 
     if (dialog.mode === 'EDIT') {
-      const result = await api.calories.update(data as Calorie);
+      const result = await api.trening.update(data);
       if (result.status === 200) {
         enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
           variant: 'success'
@@ -163,7 +167,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Vytvoriť tréning
+              {dialog.mode === 'ADD' ? 'Vytvoriť tréning' : 'Upraviť tréning'}
             </Typography>
             <Button autoFocus color="inherit" onClick={handleSubmit}>
               Uložiť
@@ -173,18 +177,6 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
         <div className={classes.root}>
           <Container maxWidth={false}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  name="date"
-                  label="Dátum"
-                  variant="outlined"
-                  type="date"
-                  onChange={handleChange}
-                  InputLabelProps={{ shrink: true }}
-                  className={classes.input}
-                  defaultValue={data.date}
-                />
-              </Grid>
               {loading.parties ? (
                 'loading...'
               ) : (
@@ -192,10 +184,9 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
                   <FormControl component="fieldset" className={classes.formControl}>
                     <FormLabel component="legend">Vyberte partiu</FormLabel>
                     <FormGroup>
-                      {parties?.map((partie) => (
-                        <>
+                      {parties?.map((partie, key) => (
+                        <div key={key}>
                           <FormControlLabel
-                            key={partie.id}
                             control={
                               <Checkbox
                                 checked={partiesChecked.some((item) => item.id === partie.id)}
@@ -211,12 +202,60 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
                             setTreningExercise={setTreningExercise}
                             treningExercise={treningExercise}
                           />
-                        </>
+                        </div>
                       ))}
                     </FormGroup>
                   </FormControl>
                 </Grid>
               )}
+              <Grid item xs={12}>
+                <TextField
+                  name="date"
+                  label="Dátum"
+                  variant="outlined"
+                  type="date"
+                  onChange={handleChange}
+                  InputLabelProps={{ shrink: true }}
+                  className={classes.input}
+                  defaultValue={trening.date}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="time"
+                  label="Trvanie tréningu"
+                  variant="outlined"
+                  type="time"
+                  onChange={handleChange}
+                  InputLabelProps={{ shrink: true }}
+                  className={classes.input}
+                  defaultValue={trening.time}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="caloriesBurned"
+                  label="Spálené kalórie"
+                  variant="outlined"
+                  type="number"
+                  onChange={handleChange}
+                  InputLabelProps={{ shrink: true }}
+                  className={classes.input}
+                  defaultValue={trening.caloriesBurned}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="notes"
+                  label="Poznámky"
+                  variant="outlined"
+                  type="text"
+                  onChange={handleChange}
+                  InputLabelProps={{ shrink: true }}
+                  className={classes.input}
+                  defaultValue={trening.notes}
+                />
+              </Grid>
             </Grid>
           </Container>
         </div>

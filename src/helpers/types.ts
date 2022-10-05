@@ -41,7 +41,41 @@ export type Body = {
   date: string;
 };
 
-export type TreningType = {};
+export type TreningType = {
+  id?: number;
+  userId?: number;
+  caloriesBurned: number | null;
+  date: string;
+  time: string;
+  notes: string;
+  parties: PartiesType[];
+  treningExercise: TreningExerciseType[];
+  partiesVariant: PartiesVariantType[];
+};
+
+export type TreningExerciseType = {
+  id?: number;
+  treningId?: number;
+  partiesVariantId: number;
+  partieId: number;
+  name: string;
+  reps: number;
+  series: number;
+  weight: number;
+  notes: string;
+};
+
+export type TreningExerciseApiType = {
+  id: number;
+  trening_id: number;
+  parties_variant_id: number;
+  parties_id: number;
+  name: string;
+  reps: number;
+  series: number;
+  weight: number;
+  notes: string;
+};
 
 export type PartiesType = {
   id: number;

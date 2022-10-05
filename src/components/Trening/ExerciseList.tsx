@@ -1,6 +1,5 @@
 import { List } from '@material-ui/core';
-import { PartiesVariantType } from '../../helpers/types';
-import { TreningExerciseType } from './TreningAddDialog';
+import { PartiesVariantType, TreningExerciseType } from '../../helpers/types';
 import { TreningPartiesExercise } from './TreningPartiesExercise';
 
 type ExerciseListProps = {

@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { useState } from 'react';
-import { TreningExerciseType } from './TreningAddDialog';
+import { TreningExerciseType } from '../../helpers/types';
 import { TreningVariantExercise } from './TreningVariantExercise';
 
 type TreningPartiesExerciseProps = {
@@ -24,7 +24,9 @@ type TreningPartiesExerciseProps = {
 export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
   const classes = useStyles();
   const { name, partiesVariantId, setTreningExercise, treningExercise, partieId } = props;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(
+    treningExercise.some((item) => item.partiesVariantId === partiesVariantId)
+  );
 
   const defaultTreningPartiesExerciseValues = {
     partiesVariantId: partiesVariantId,
@@ -57,6 +59,7 @@ export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
               partieId === item.partieId &&
               partiesVariantId === item.partiesVariantId && (
                 <TreningVariantExercise
+                  key={key}
                   index={key}
                   treningExercise={treningExercise}
                   setTreningExercise={setTreningExercise}
