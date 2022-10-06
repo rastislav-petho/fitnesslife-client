@@ -4,7 +4,6 @@ import {
   CalorieFilterDetail,
   CalorieFilterDialog,
   Layout,
-  Loading,
   useCalorie
 } from '../components';
 import {
@@ -31,17 +30,12 @@ export const CaloriesPage: FC = () => {
     handleChangePage,
     fetchData,
     dialog,
-    loading,
     setFilter,
     handleSetState,
     columns
   } = useCalorie();
 
   const showCaloriesDetail = !!filter.dateFrom && !!filter.dateTo;
-
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <Layout title="Kalórie" handleDialogOpen={handleDialog} hadleFilterOpen={handleFilterOpen}>

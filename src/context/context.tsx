@@ -7,6 +7,7 @@ type State = {
   user: User;
   loading: boolean;
   apiUrl: string;
+  menuOpen: boolean;
 };
 
 interface IStateContext {
@@ -27,7 +28,8 @@ export const ContextProvider: FC<ContextProviderProps> = (props) => {
     user: user,
     apiUrl: 'http://localhost/api',
     //apiUrl: 'http://fitnesslife.sk/api/api',
-    loading: false
+    loading: false,
+    menuOpen: false
   };
 
   const [appState, dispatch] = useReducer(reducer, initialState);

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Layout, Loading, TreningAddDialog, useTrening } from '../components';
+import { Layout, TreningAddDialog, useTrening } from '../components';
 import {
   Chip,
   makeStyles,
@@ -13,14 +13,13 @@ import {
   TableRow
 } from '@material-ui/core';
 import { PartiesType, TreningType } from '../helpers/types';
-import { formatDate } from '../helpers/helpers';
+import { formatDate, getPartiesColor } from '../helpers/helpers';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 
 export const TreningPage: FC = () => {
   const classes = useStyles();
 
   const {
-    loading,
     columns,
     handleDialog,
     handleFilterOpen,
@@ -30,10 +29,6 @@ export const TreningPage: FC = () => {
     filter,
     handleChangePage
   } = useTrening();
-
-  if (loading) {
-    return <Loading />;
-  }
 
   const showCaloriesDetail = !!filter.dateFrom && !!filter.dateTo;
 
@@ -64,7 +59,15 @@ export const TreningPage: FC = () => {
                     <TableCell align="left">
                       <div className={classes.chipWrapper}>
                         {row.parties.map((item: PartiesType) => (
-                          <Chip key={item.id} label={item.name} color="secondary" />
+                          <Chip
+                            key={item.id}
+                            label={item.name}
+                            style={{
+                              backgroundColor: getPartiesColor(item.code),
+                              color: '#ffffff',
+                              marginRight: 4
+                            }}
+                          />
                         ))}
                       </div>
                     </TableCell>

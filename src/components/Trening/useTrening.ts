@@ -25,7 +25,7 @@ export type TreningPageDataProps = {
 };
 
 export const useTrening = () => {
-  const { appState, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const api = useApi();
 
   const [state, setState] = useState<TreningPageDataProps>({
@@ -78,7 +78,6 @@ export const useTrening = () => {
   ];
 
   return {
-    loading: appState.loading,
     columns,
     state,
     handleSetState,

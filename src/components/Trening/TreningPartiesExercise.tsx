@@ -49,7 +49,7 @@ export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
   return (
     <div>
       <ListItem button onClick={handleClick}>
-        <ListItemText primary={name} />
+        <ListItemText primary={name} className={classes.listItem} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto">
@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme: Theme) =>
     exerciseContainer: {
       marginTop: theme.spacing(1),
       marginBottom: theme.spacing(1)
+    },
+    listItem: {
+      color: theme.palette.primary.main
     }
   })
 );

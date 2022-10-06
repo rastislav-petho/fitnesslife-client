@@ -25,7 +25,7 @@ export type CaloriePageDataProps = {
 };
 
 export const useCalorie = () => {
-  const { appState, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [dialog, setDialog] = useState<CalorieDialog>({
     open: false,
     mode: 'ADD'
@@ -84,7 +84,6 @@ export const useCalorie = () => {
     fetchData,
     handleFilterOpen,
     handleSetState,
-    loading: appState.loading,
     dialog,
     setFilter,
     filter,

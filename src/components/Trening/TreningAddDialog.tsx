@@ -31,7 +31,6 @@ import {
 
 import { TreningDialog } from './useTrening';
 import { ExerciseList } from './ExerciseList';
-import { formatDateToField } from '../../helpers/helpers';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -121,6 +120,13 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
     setTrening({ ...trening, [event.target.name]: event.target.value });
   };
 
+  const onClose = () => {
+    setTreningExercise([]);
+    setPartiesChecked([]);
+    setPartiesVariant([]);
+    setDialog(false, 'ADD');
+  };
+
   const handleSubmit = async () => {
     const data = {
       trening,
@@ -152,18 +158,10 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
 
   return (
     <div>
-      <Dialog
-        fullScreen
-        open={dialog.open}
-        onClose={() => setDialog(false, 'ADD')}
-        TransitionComponent={Transition}>
+      <Dialog fullScreen open={dialog.open} onClose={onClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar} color="secondary">
           <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => setDialog(false, 'ADD')}
-              aria-label="close">
+            <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>

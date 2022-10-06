@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -16,13 +16,15 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AccessibilityNewIcon from '@material-ui/icons/AccessibilityNew';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Avatar, Box, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
 import { useApi } from '../api/useApi';
 import { DialogMode } from '../helpers/types';
 import { config } from '../config';
+import { Context } from '../context/context';
+import { Loading } from './Loading';
 
 type LayoutProps = {
   title: string;
@@ -34,16 +36,16 @@ export const Layout: FC<LayoutProps> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { auth } = useApi();
-  const [open, setOpen] = useState<boolean>(false);
+  const { appState, dispatch } = useContext(Context);
 
   const { title, handleDialogOpen, hadleFilterOpen } = props;
 
   const handleDrawerOpen = () => {
-    setOpen(true);
+    dispatch({ type: 'SET_MENU_OPEN', open: true });
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    dispatch({ type: 'SET_MENU_OPEN', open: false });
   };
 
   return (
@@ -53,7 +55,7 @@ export const Layout: FC<LayoutProps> = (props) => {
         color="secondary"
         position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
+          [classes.appBarShift]: appState.menuOpen
         })}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -61,7 +63,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}>
+            className={clsx(classes.menuButton, appState.menuOpen && classes.hide)}>
             <MenuIcon />
           </IconButton>
           <Typography>{title}</Typography>
@@ -81,7 +83,7 @@ export const Layout: FC<LayoutProps> = (props) => {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={appState.menuOpen}
         classes={{
           paper: classes.drawerPaper
         }}>
@@ -100,6 +102,13 @@ export const Layout: FC<LayoutProps> = (props) => {
           </IconButton>
         </div>
         <Divider />
+        <Box className={classes.userWrapper}>
+          <Avatar className={classes.avatar}>{appState.user.name.slice(0, 1)}</Avatar>
+          <Typography variant="h6" className={classes.userName}>
+            {appState.user.name}
+          </Typography>
+        </Box>
+
         <List>
           <Link to="/trening" className={classes.link}>
             <ListItem button>
@@ -136,10 +145,10 @@ export const Layout: FC<LayoutProps> = (props) => {
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: open
+          [classes.contentShift]: appState.menuOpen
         })}>
         <div className={classes.drawerHeader} />
-        {props.children}
+        {appState.loading ? <Loading /> : props.children}
       </main>
     </div>
   );
@@ -220,6 +229,24 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffffff'
   },
   icon: {
+    color: theme.palette.secondary.main
+  },
+  userWrapper: {
+    width: '100%',
+    height: 80,
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.main
+  },
+  userName: {
+    marginLeft: theme.spacing(2),
+    color: '#ffffff'
+  },
+  avatar: {
+    backgroundColor: '#ffffff',
     color: theme.palette.secondary.main
   }
 }));

@@ -77,10 +77,20 @@ export type TreningExerciseApiType = {
   notes: string;
 };
 
+export type PartiesCodeType =
+  | 'SHOULDERS'
+  | 'BICEPS'
+  | 'TRICEPS'
+  | 'CHEST'
+  | 'LEGS'
+  | 'BELLY'
+  | 'BACK'
+  | 'AEROBIC-EXERCISE';
+
 export type PartiesType = {
   id: number;
   name: string;
-  code: 'SHOULDERS' | 'BICEPS' | 'TRICEPS' | 'CHEST' | 'LEGS' | 'BELLY' | 'HIPS' | 'HIPS';
+  code: PartiesCodeType;
 };
 
 export type PartiesApiType = PartiesType;

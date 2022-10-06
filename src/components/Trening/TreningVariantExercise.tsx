@@ -45,19 +45,6 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
     });
   };
 
-  const handleweightChange = (event: any, value: number | number[]) => {
-    setTreningExercise((prevState) => {
-      const newState = prevState.map((obj, key) => {
-        if (key === index) {
-          return { ...obj, weight: value as number };
-        }
-        return obj;
-      });
-
-      return newState;
-    });
-  };
-
   const handleChange = (event: any) => {
     setTreningExercise((prevState) => {
       const newState = prevState.map((obj, key) => {
@@ -83,12 +70,10 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
         className={classes.exerciseInput}
         defaultValue={treningExercise[index].name}
       />
-      <Typography variant="subtitle2" className={classes.sliderLabel}>
-        Počet sérií: {treningExercise[index].series}
-      </Typography>
+      <Typography variant="subtitle2">Počet sérií: {treningExercise[index].series}</Typography>
       <Slider
         step={1}
-        min={1}
+        min={0}
         max={10}
         value={treningExercise[index].series}
         onChange={handleSeriesChange}
@@ -100,24 +85,22 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
       </Typography>
       <Slider
         step={1}
-        min={1}
+        min={0}
         max={50}
         value={treningExercise[index].reps}
         onChange={handleRepsChange}
         aria-labelledby="continuous-slider"
         color="secondary"
       />
-      <Typography variant="subtitle2" className={classes.sliderLabel}>
-        váha: {treningExercise[index].weight}
-      </Typography>
-      <Slider
-        step={1}
-        min={1}
-        max={200}
-        value={treningExercise[index].weight}
-        onChange={handleweightChange}
-        aria-labelledby="continuous-slider"
-        color="secondary"
+      <TextField
+        name="weight"
+        label="Váha"
+        variant="outlined"
+        type="number"
+        onChange={handleChange}
+        InputLabelProps={{ shrink: true }}
+        className={classes.exerciseInput}
+        defaultValue={treningExercise[index].weight}
       />
       <TextField
         name="notes"
@@ -136,7 +119,8 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     exerciseInput: {
-      width: '100%'
+      width: '100%',
+      marginBottom: theme.spacing(2)
     },
     sliderLabel: {
       marginTop: theme.spacing(2)

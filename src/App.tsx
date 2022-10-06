@@ -18,8 +18,9 @@ const App: FC = () => {
         //main: '#8774B9'
       },
       primary: {
-        main: '#0167B1'
-      }
+        main: '#0167B1',
+      },
+      
     }
   });
 

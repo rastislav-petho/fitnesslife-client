@@ -11,6 +11,12 @@ export default function reducer(state: any, action: any) {
         ...state,
         loading: action.loading
       };
+
+    case 'SET_MENU_OPEN':
+      return {
+        ...state,
+        menuOpen: action.open
+      };
     default:
       return state;
   }

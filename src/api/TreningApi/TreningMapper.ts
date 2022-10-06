@@ -1,9 +1,4 @@
-import {
-  PartiesApiType,
-  PartiesVariantApiType,
-  TreningExerciseApiType,
-  TreningType
-} from '../../helpers/types';
+import { PartiesApiType, TreningExerciseApiType, TreningType } from '../../helpers/types';
 
 export const fromApi = (data: any): TreningType => {
   const mapedData = {
@@ -28,16 +23,12 @@ export const fromApi = (data: any): TreningType => {
       weight: item.weight,
       notes: item.notes
     })),
-    partiesVariant: data.partiesVariant
-      .map((item: any) =>
-        item.map((item: PartiesVariantApiType) => ({
-          id: item.id,
-          partiesId: item.parties_id,
-          name: item.name,
-          code: item.code
-        }))
-      )
-      .flat()
+    partiesVariant: data.partiesVariant.map((item: any) => ({
+      id: item.id,
+      partiesId: item.parties_id,
+      name: item.name,
+      code: item.code
+    }))
   };
 
   return mapedData;

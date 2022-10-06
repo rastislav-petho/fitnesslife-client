@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Layout, Loading } from '../components';
+import { Layout } from '../components';
 import {
   makeStyles,
   Paper,
@@ -20,12 +20,7 @@ import { formatDate, formatDecimal } from '../helpers/helpers';
 export const BodyPage: FC = () => {
   const classes = useStyles();
 
-  const { loading, state, handleSetState, handleChangePage, dialog, filter, fetchData, columns } =
-    useBody();
-
-  if (loading) {
-    return <Loading />;
-  }
+  const { state, handleSetState, handleChangePage, dialog, filter, fetchData, columns } = useBody();
 
   const length = state.data.length;
   return (

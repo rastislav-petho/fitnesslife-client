@@ -24,6 +24,7 @@ export const TreningApi = () => {
       );
       return response;
     } catch (error) {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
       return Promise.reject(error);
     }
   };

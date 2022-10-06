@@ -25,7 +25,7 @@ export type BodyFilter = {
 };
 
 export const useBody = () => {
-  const { appState, dispatch } = useContext(Context);
+  const { dispatch } = useContext(Context);
   const [dialog, setDialog] = useState<BodyDialog>({
     open: false,
     mode: 'ADD'
@@ -89,7 +89,6 @@ export const useBody = () => {
     state,
     handleSetState,
     dialog: { handleDialog, dialog },
-    filter: { filter, setFilter, handleFilterOpen },
-    loading: appState.loading
+    filter: { filter, setFilter, handleFilterOpen }
   };
 };
