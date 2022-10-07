@@ -34,6 +34,7 @@ import {
 import { TreningDialog } from './useTrening';
 import { ExerciseList } from './ExerciseList';
 import { TreningCopyDialog } from './TreningCopyDialog';
+import { TreningDetailDialog } from './TreningDetailDialog';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -44,7 +45,7 @@ const Transition = React.forwardRef(function Transition(
 
 type TreningAddDialogProps = {
   dialog: TreningDialog;
-  setDialog: (value: boolean, mode: DialogMode) => void;
+  setDialog: (value: boolean, mode: DialogMode, data?: TreningType) => void;
   fetchData: (page?: number) => void;
 };
 
@@ -212,6 +213,15 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
     setActionMenu(null);
   };
 
+  const handleDetailDialogOpen = () => {
+    setDialog(true, 'DETAIL', trening);
+  };
+
+  const handleDetailDialogClose = () => {
+    setDialog(true, 'EDIT');
+    setActionMenu(null);
+  };
+
   return (
     <div>
       <Dialog
@@ -219,7 +229,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
         open={dialog.open && (dialog.mode === 'EDIT' || dialog.mode === 'ADD')}
         onClose={onClose}
         TransitionComponent={Transition}>
-        <AppBar className={classes.appBar} color="secondary">
+        <AppBar position="sticky" color="secondary">
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
               <CloseIcon />
@@ -243,6 +253,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
                   open={Boolean(actionMenu)}
                   onClose={handleCloseActionMenu}>
                   <MenuItem onClick={handleSubmit}>Uložiť</MenuItem>
+                  <MenuItem onClick={handleDetailDialogOpen}>Detail</MenuItem>
                   <MenuItem onClick={handleCopyDialogOpen}>Kopírovať</MenuItem>
                   <MenuItem onClick={handleDeleteSubmit}>Zmazať</MenuItem>
                 </Menu>
@@ -347,15 +358,17 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
         handleChange={handleChange}
         onSubmit={handleCopySubmit}
       />
+      <TreningDetailDialog
+        open={dialog.open && dialog.mode === 'DETAIL'}
+        onClose={handleDetailDialogClose}
+        trening={trening}
+      />
     </div>
   );
 };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    appBar: {
-      position: 'relative'
-    },
     title: {
       marginLeft: theme.spacing(2),
       flex: 1

@@ -48,7 +48,7 @@ export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
 
   return (
     <div>
-      <ListItem button onClick={handleClick}>
+      <ListItem button onClick={handleClick} className={classes.list}>
         <ListItemText primary={name} className={classes.listItem} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
@@ -83,6 +83,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listItem: {
       color: theme.palette.primary.main
+    },
+    list: {
+      borderBottom: `1px solid ${theme.palette.primary.main}`
     }
   })
 );

@@ -11,7 +11,7 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
-import { Calorie, DialogMode } from '../../helpers/types';
+import { Calorie, DialogMode, TreningType } from '../../helpers/types';
 import { formatDateToField } from '../../helpers/helpers';
 import { useSnackbar } from 'notistack';
 import { CalorieDialog } from './useCalorie';
@@ -101,7 +101,7 @@ export const CalorieAddDialog = (props: CalorieAddDialogProps) => {
         open={dialog.open}
         onClose={() => setDialog(false, 'ADD')}
         TransitionComponent={Transition}>
-        <AppBar className={classes.appBar} color="secondary">
+        <AppBar position="sticky" color="secondary">
           <Toolbar>
             <IconButton
               edge="start"

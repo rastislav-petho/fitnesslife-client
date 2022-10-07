@@ -1,5 +1,5 @@
 {
-  "name": "web-client",
+  "name": "fitnesslife-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -53,5 +53,6 @@
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
     "@types/react-router-dom": "^5.1.7"
-  }
+  },
+  "proxy": "192.168.1.1"
 }

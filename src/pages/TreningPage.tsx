@@ -15,6 +15,7 @@ import {
 import { PartiesType, TreningType } from '../helpers/types';
 import { formatDate, getPartiesColor } from '../helpers/helpers';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import { TreningFilterDialog } from '../components/Trening/TreningFilterDialog';
 
 export const TreningPage: FC = () => {
   const classes = useStyles();
@@ -27,6 +28,8 @@ export const TreningPage: FC = () => {
     dialog,
     state,
     filter,
+    setFilter,
+    handleSetState,
     handleChangePage
   } = useTrening();
 
@@ -49,32 +52,34 @@ export const TreningPage: FC = () => {
               </TableHead>
               <TableBody>
                 {state.data.map((row: TreningType) => (
-                  <TableRow
-                    key={row.id}
-                    onClick={() => handleDialog(true, 'EDIT', row)}
-                    className={classes.tableRow}>
-                    <TableCell component="th" scope="row" style={{ minWidth: 110 }}>
-                      {formatDate(row.date)}
-                    </TableCell>
-                    <TableCell align="left">
-                      <div className={classes.chipWrapper}>
-                        {row.parties.map((item: PartiesType) => (
-                          <Chip
-                            key={item.id}
-                            label={item.name}
-                            style={{
-                              backgroundColor: getPartiesColor(item.code),
-                              color: '#ffffff',
-                              marginRight: 4
-                            }}
-                          />
-                        ))}
-                      </div>
-                    </TableCell>
-                    <TableCell align="left">{row.caloriesBurned}</TableCell>
-                    <TableCell align="left">{row.time}</TableCell>
-                    <TableCell align="left">{row.notes}</TableCell>
-                  </TableRow>
+                  <>
+                    <TableRow
+                      key={row.id}
+                      onClick={() => handleDialog(true, 'EDIT', row)}
+                      className={classes.tableRow}>
+                      <TableCell component="th" scope="row" style={{ minWidth: 110 }}>
+                        {formatDate(row.date)}
+                      </TableCell>
+                      <TableCell align="left">
+                        <div className={classes.chipWrapper}>
+                          {row.parties.map((item: PartiesType) => (
+                            <Chip
+                              key={item.id}
+                              label={item.name}
+                              style={{
+                                backgroundColor: getPartiesColor(item.code),
+                                color: '#ffffff',
+                                marginRight: 4
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">{row.caloriesBurned}</TableCell>
+                      <TableCell align="left">{row.time}</TableCell>
+                      <TableCell align="left">{row.notes}</TableCell>
+                    </TableRow>
+                  </>
                 ))}
               </TableBody>
             </Table>
@@ -98,6 +103,7 @@ export const TreningPage: FC = () => {
         )}
       </div>
       <TreningAddDialog dialog={dialog} setDialog={handleDialog} fetchData={fetchData} />
+      <TreningFilterDialog filter={filter} setFilter={setFilter} setData={handleSetState} />
     </Layout>
   );
 };

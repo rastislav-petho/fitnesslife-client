@@ -105,7 +105,7 @@ export const BodyAddDialog = (props: BodyAddDialogProps) => {
         open={dialog.open}
         onClose={() => setDialog(false, 'ADD')}
         TransitionComponent={Transition}>
-        <AppBar className={classes.appBar} color="secondary">
+        <AppBar position="sticky" color="secondary">
           <Toolbar>
             <IconButton
               edge="start"

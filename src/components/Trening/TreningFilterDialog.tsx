@@ -11,9 +11,9 @@ import Slide from '@material-ui/core/Slide';
 import { TransitionProps } from '@material-ui/core/transitions';
 import { Container, Grid, TextField } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
-import { Calorie } from '../../helpers/types';
-import { CalorieFilter } from './useCalorie';
+import { TreningType } from '../../helpers/types';
 import { Context } from '../../context/context';
+import { TreningFilter } from './useTrening';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -22,13 +22,13 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-type CalorieFilterDialogProps = {
-  filter: CalorieFilter;
-  setFilter: React.Dispatch<React.SetStateAction<CalorieFilter>>;
-  setData: (data: Calorie[]) => void;
+type TreningFilterDialogProps = {
+  filter: TreningFilter;
+  setFilter: React.Dispatch<React.SetStateAction<TreningFilter>>;
+  setData: (data: TreningType[]) => void;
 };
 
-export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
+export const TreningFilterDialog = (props: TreningFilterDialogProps) => {
   const classes = useStyles();
   const { dispatch } = useContext(Context);
   const api = useApi();
@@ -40,7 +40,7 @@ export const CalorieFilterDialog = (props: CalorieFilterDialogProps) => {
 
   const handleSubmit = async () => {
     dispatch({ type: 'SET_LOADING', loading: true });
-    const result = await api.calories.filter(filter);
+    const result = await api.trening.filter(filter);
     if (result.status === 200) {
       setData(result.data);
       setFilter({ ...filter, open: false });

@@ -62,7 +62,7 @@ export const useTrening = () => {
   };
 
   const handleDialog = (value: boolean, mode: DialogMode, data?: TreningType) => {
-    setDialog({ open: value, mode: mode, data });
+    setDialog({ open: value, mode: mode, data: data });
   };
 
   const handleFilterOpen = (value: boolean) => {
@@ -84,6 +84,7 @@ export const useTrening = () => {
     dialog,
     handleDialog,
     filter,
+    setFilter,
     handleFilterOpen,
     fetchData,
     handleChangePage

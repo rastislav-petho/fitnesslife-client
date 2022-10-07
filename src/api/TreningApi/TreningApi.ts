@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useSnackbar } from 'notistack';
 import { useContext } from 'react';
+import { TreningFilter } from '../../components/Trening/useTrening';
 import { config } from '../../config';
 import { Context } from '../../context/context';
 import { TreningExerciseType, TreningType } from '../../helpers/types';
@@ -49,6 +50,27 @@ export const TreningApi = () => {
     }
   };
 
+  const filter = async (filter: TreningFilter): Promise<any> => {
+    try {
+      const response = await axios.get(`${config.apiUrl}/trening/filter`, {
+        ...options,
+        params: {
+          id: appState.user.id,
+          dateFrom: filter.dateFrom,
+          dateTo: filter.dateTo
+        }
+      });
+      const data = {
+        ...response,
+        data: response.data.map((item: any) => fromApi(item))
+      };
+      return data;
+    } catch (error) {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
+      return Promise.reject(error);
+    }
+  };
+
   const list = async (page: number = 1) => {
     try {
       const response = await axios.get(`${config.apiUrl}/trening/${appState.user.id}`, {
@@ -80,5 +102,5 @@ export const TreningApi = () => {
     }
   };
 
-  return { post, list, update, remove };
+  return { post, list, update, remove, filter };
 };

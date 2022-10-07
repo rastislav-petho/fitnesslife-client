@@ -55,7 +55,7 @@ export const Layout: FC<LayoutProps> = (props) => {
       <AppBar
         color="secondary"
         position="fixed"
-        className={clsx(open, {
+        className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}>
         <Toolbar className={classes.toolbar}>
@@ -146,7 +146,7 @@ export const Layout: FC<LayoutProps> = (props) => {
       </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: appState.menuOpen
+          [classes.contentShift]: open
         })}>
         <div className={classes.drawerHeader} />
         {appState.loading ? <Loading /> : props.children}

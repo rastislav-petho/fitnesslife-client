@@ -18,7 +18,7 @@ export const getPartiesColor = (partie: PartiesCodeType): string => {
   const colors = [
     { code: 'SHOULDERS', color: 'red' },
     { code: 'BICEPS', color: 'orange' },
-    { code: 'TRICEPS', color: 'yellow' },
+    { code: 'TRICEPS', color: 'grey' },
     { code: 'CHEST', color: 'green' },
     { code: 'LEGS', color: 'blue' },
     { code: 'BACK', color: 'purple' },
