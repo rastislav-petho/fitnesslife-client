@@ -5,8 +5,10 @@ import {
   Slider,
   makeStyles,
   Theme,
-  createStyles
+  createStyles,
+  Button
 } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { TreningExerciseType } from '../../helpers/types';
 
 type TreningVariantExerciseProps = {
@@ -56,6 +58,12 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
 
       return newState;
     });
+  };
+
+  const handleRemoveExercise = (index: number) => {
+    const valueToRemove = [treningExercise[index]];
+    const filtered = treningExercise.filter((element) => !valueToRemove.includes(element));
+    setTreningExercise(filtered);
   };
 
   return (
@@ -112,6 +120,11 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
         className={classes.exerciseInput}
         defaultValue={treningExercise[index].notes}
       />
+      <div className={classes.remove}>
+        <Button onClick={() => handleRemoveExercise(index)}>
+          <DeleteForeverIcon className={classes.removeIcon} />
+        </Button>
+      </div>
     </Grid>
   );
 };
@@ -124,6 +137,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     sliderLabel: {
       marginTop: theme.spacing(2)
+    },
+    remove: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center'
+    },
+    removeIcon: {
+      color: theme.palette.error.main
     }
   })
 );

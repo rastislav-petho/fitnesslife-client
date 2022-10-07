@@ -121,4 +121,4 @@ export type Login = {
   password: string;
 };
 
-export type DialogMode = 'ADD' | 'EDIT';
+export type DialogMode = 'ADD' | 'EDIT' | 'COPY';

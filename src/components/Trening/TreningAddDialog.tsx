@@ -18,6 +18,8 @@ import {
   FormGroup,
   FormLabel,
   Grid,
+  Menu,
+  MenuItem,
   TextField
 } from '@material-ui/core';
 import { useApi } from '../../api/useApi';
@@ -31,6 +33,7 @@ import {
 
 import { TreningDialog } from './useTrening';
 import { ExerciseList } from './ExerciseList';
+import { TreningCopyDialog } from './TreningCopyDialog';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
@@ -67,6 +70,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
   const [partiesChecked, setPartiesChecked] = useState<{ id: number; checked: boolean }[]>([]);
   const [treningExercise, setTreningExercise] = useState<TreningExerciseType[]>([]);
   const [loading, setLoading] = useState({ parties: true, partiesVariant: false });
+  const [actionMenu, setActionMenu] = React.useState<null | HTMLElement>(null);
 
   useEffect(() => {
     if (dialog.data) {
@@ -100,8 +104,14 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
 
   const handlePartiesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (partiesChecked.some((item) => item.id === Number(event.target.name))) {
-      const filterd = partiesChecked.filter((item) => item.id !== Number(event.target.name));
-      setPartiesChecked(filterd);
+      const filteredChecked = partiesChecked.filter(
+        (item) => item.id !== Number(event.target.name)
+      );
+      const filterdExercise = treningExercise.filter(
+        (item) => item.partieId !== Number(event.target.name)
+      );
+      setPartiesChecked(filteredChecked);
+      setTreningExercise(filterdExercise);
 
       const variantsFilterd = partiesVariant.filter(
         (item) => item.partiesId !== Number(event.target.name)
@@ -156,9 +166,59 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
     }
   };
 
+  const handleDeleteSubmit = async () => {
+    const confirm = window.confirm('Naozaj si prajete zmazať tréning?');
+    if (confirm) {
+      const result = await api.trening.remove(trening.id as number);
+      if (result.status === 200) {
+        enqueueSnackbar('Záznam bol úspešne aktualizovaný.', {
+          variant: 'success'
+        });
+        fetchData();
+        setDialog(false, 'ADD');
+      }
+    }
+  };
+
+  const handleCopySubmit = async () => {
+    const data = {
+      trening,
+      treningExercise
+    };
+    const result = await api.trening.post(data);
+    if (result.status === 200) {
+      enqueueSnackbar('Záznam bol úspešne pridaný.', { variant: 'success' });
+      fetchData();
+      setDialog(false, 'ADD');
+    } else {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
+    }
+  };
+
+  const handleCopyDialogOpen = () => {
+    setDialog(true, 'COPY');
+  };
+
+  const handleCopyDialogClose = () => {
+    setDialog(true, 'EDIT');
+    setActionMenu(null);
+  };
+
+  const handleOpenActionMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setActionMenu(event.currentTarget);
+  };
+
+  const handleCloseActionMenu = () => {
+    setActionMenu(null);
+  };
+
   return (
     <div>
-      <Dialog fullScreen open={dialog.open} onClose={onClose} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        open={dialog.open && (dialog.mode === 'EDIT' || dialog.mode === 'ADD')}
+        onClose={onClose}
+        TransitionComponent={Transition}>
         <AppBar className={classes.appBar} color="secondary">
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
@@ -167,9 +227,32 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
             <Typography variant="h6" className={classes.title}>
               {dialog.mode === 'ADD' ? 'Vytvoriť tréning' : 'Upraviť tréning'}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleSubmit}>
-              Uložiť
-            </Button>
+            {dialog.mode === 'EDIT' && (
+              <>
+                <Button
+                  color="inherit"
+                  aria-controls="akcia-menu"
+                  aria-haspopup="true"
+                  onClick={handleOpenActionMenu}>
+                  Akcia
+                </Button>
+                <Menu
+                  id="akcia-menu"
+                  anchorEl={actionMenu}
+                  keepMounted
+                  open={Boolean(actionMenu)}
+                  onClose={handleCloseActionMenu}>
+                  <MenuItem onClick={handleSubmit}>Uložiť</MenuItem>
+                  <MenuItem onClick={handleCopyDialogOpen}>Kopírovať</MenuItem>
+                  <MenuItem onClick={handleDeleteSubmit}>Zmazať</MenuItem>
+                </Menu>
+              </>
+            )}
+            {dialog.mode === 'ADD' && (
+              <Button color="inherit" onClick={handleSubmit}>
+                Uložiť
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
         <div className={classes.root}>
@@ -258,6 +341,12 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
           </Container>
         </div>
       </Dialog>
+      <TreningCopyDialog
+        open={dialog.open && dialog.mode === 'COPY'}
+        handleCopyDialogClose={handleCopyDialogClose}
+        handleChange={handleChange}
+        onSubmit={handleCopySubmit}
+      />
     </div>
   );
 };

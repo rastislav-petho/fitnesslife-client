@@ -39,6 +39,16 @@ export const TreningApi = () => {
     }
   };
 
+  const remove = async (id: number) => {
+    try {
+      const response = await axios.delete(`${config.apiUrl}/trening/${id}`, { ...options });
+      return response;
+    } catch (error) {
+      enqueueSnackbar('Upss, niečo sa pokazilo', { variant: 'error' });
+      return Promise.reject(error);
+    }
+  };
+
   const list = async (page: number = 1) => {
     try {
       const response = await axios.get(`${config.apiUrl}/trening/${appState.user.id}`, {
@@ -70,5 +80,5 @@ export const TreningApi = () => {
     }
   };
 
-  return { post, list, update };
+  return { post, list, update, remove };
 };

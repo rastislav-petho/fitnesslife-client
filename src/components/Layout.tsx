@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -36,16 +36,17 @@ export const Layout: FC<LayoutProps> = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const { auth } = useApi();
-  const { appState, dispatch } = useContext(Context);
+  const { appState } = useContext(Context);
+  const [open, setOpen] = useState<boolean>(false);
 
   const { title, handleDialogOpen, hadleFilterOpen } = props;
 
   const handleDrawerOpen = () => {
-    dispatch({ type: 'SET_MENU_OPEN', open: true });
+    setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    dispatch({ type: 'SET_MENU_OPEN', open: false });
+    setOpen(false);
   };
 
   return (
@@ -54,8 +55,8 @@ export const Layout: FC<LayoutProps> = (props) => {
       <AppBar
         color="secondary"
         position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: appState.menuOpen
+        className={clsx(open, {
+          [classes.appBarShift]: open
         })}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -63,7 +64,7 @@ export const Layout: FC<LayoutProps> = (props) => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, appState.menuOpen && classes.hide)}>
+            className={clsx(classes.menuButton, open && classes.hide)}>
             <MenuIcon />
           </IconButton>
           <Typography>{title}</Typography>
@@ -83,7 +84,7 @@ export const Layout: FC<LayoutProps> = (props) => {
         className={classes.drawer}
         variant="persistent"
         anchor="left"
-        open={appState.menuOpen}
+        open={open}
         classes={{
           paper: classes.drawerPaper
         }}>
@@ -233,7 +234,7 @@ const useStyles = makeStyles((theme) => ({
   },
   userWrapper: {
     width: '100%',
-    height: 80,
+    height: 64,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'row',
