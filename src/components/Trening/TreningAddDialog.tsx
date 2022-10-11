@@ -218,7 +218,7 @@ export const TreningAddDialog = (props: TreningAddDialogProps) => {
   };
 
   const handleDetailDialogClose = () => {
-    setDialog(true, 'EDIT');
+    setDialog(true, 'EDIT', trening);
     setActionMenu(null);
   };
 

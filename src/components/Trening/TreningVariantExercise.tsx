@@ -80,6 +80,26 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
           className={classes.exerciseInput}
           defaultValue={treningExercise[index].name}
         />
+        <TextField
+          name="weight"
+          label="Váha"
+          variant="outlined"
+          type="number"
+          onChange={handleChange}
+          InputLabelProps={{ shrink: true }}
+          className={classes.exerciseInput}
+          defaultValue={treningExercise[index].weight}
+        />
+        <TextField
+          name="notes"
+          label="Poznámky"
+          variant="outlined"
+          type="text"
+          onChange={handleChange}
+          InputLabelProps={{ shrink: true }}
+          className={classes.exerciseInput}
+          defaultValue={treningExercise[index].notes}
+        />
         <Typography variant="subtitle2">Počet sérií: {treningExercise[index].series}</Typography>
         <Slider
           step={1}
@@ -102,26 +122,7 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
           aria-labelledby="continuous-slider"
           color="secondary"
         />
-        <TextField
-          name="weight"
-          label="Váha"
-          variant="outlined"
-          type="number"
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-          className={classes.exerciseInput}
-          defaultValue={treningExercise[index].weight}
-        />
-        <TextField
-          name="notes"
-          label="Poznámky"
-          variant="outlined"
-          type="text"
-          onChange={handleChange}
-          InputLabelProps={{ shrink: true }}
-          className={classes.exerciseInput}
-          defaultValue={treningExercise[index].notes}
-        />
+
         <div className={classes.remove}>
           <Button onClick={() => handleRemoveExercise(index)}>
             <DeleteForeverIcon className={classes.removeIcon} />

@@ -16,8 +16,8 @@ import {
   Chip
 } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions';
-import { PartiesType, TreningType } from '../../helpers/types';
-import { formatDate, getPartiesColor } from '../../helpers/helpers';
+import { PartiesCodeType, PartiesType, TreningType } from '../../helpers/types';
+import { formatDate, formatDecimal, getPartiesColor } from '../../helpers/helpers';
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children?: React.ReactElement },
   ref: React.Ref<unknown>
@@ -94,10 +94,19 @@ export const TreningDetailDialog: FC<TreningDetailDialogProps> = (props) => {
             <TableBody>
               {trening.treningExercise.map((exercise, key) => (
                 <TableRow key={key}>
-                  <TableCell>{exercise.name}</TableCell>
+                  <TableCell
+                    style={{
+                      color: '#ffffff',
+                      backgroundColor: getPartiesColor(
+                        trening.parties.find((item: PartiesType) => item.id === exercise.partieId)
+                          ?.code as PartiesCodeType
+                      )
+                    }}>
+                    {exercise.name}
+                  </TableCell>
                   <TableCell>{exercise.reps}</TableCell>
                   <TableCell>{exercise.series}</TableCell>
-                  <TableCell>{exercise.weight} kg</TableCell>
+                  <TableCell>{formatDecimal(exercise.weight)} kg</TableCell>
                   <TableCell>{exercise.notes}</TableCell>
                 </TableRow>
               ))}

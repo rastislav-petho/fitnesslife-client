@@ -53,6 +53,5 @@
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
     "@types/react-router-dom": "^5.1.7"
-  },
-  "proxy": "192.168.1.1"
+  }
 }

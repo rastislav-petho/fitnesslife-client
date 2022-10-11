@@ -22,7 +22,8 @@ export const getPartiesColor = (partie: PartiesCodeType): string => {
     { code: 'CHEST', color: 'green' },
     { code: 'LEGS', color: 'blue' },
     { code: 'BACK', color: 'purple' },
-    { code: 'AEROBIC-EXERCISE', color: 'pink' }
+    { code: 'AEROBIC-EXERCISE', color: 'pink' },
+    { code: 'COMPLEX-EXERCISE', color: 'black' }
   ];
 
   const color = colors.find((color) => color.code === partie);

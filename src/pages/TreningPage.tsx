@@ -1,7 +1,10 @@
 import { FC } from 'react';
-import { Layout, TreningAddDialog, useTrening } from '../components';
+import { DesktopWrapper, Layout, MobileWrapper, TreningAddDialog, useTrening } from '../components';
 import {
+  Card,
   Chip,
+  Container,
+  Grid,
   makeStyles,
   Paper,
   Table,
@@ -10,7 +13,8 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
+  Typography
 } from '@material-ui/core';
 import { PartiesType, TreningType } from '../helpers/types';
 import { formatDate, getPartiesColor } from '../helpers/helpers';
@@ -38,53 +42,110 @@ export const TreningPage: FC = () => {
   return (
     <Layout title="Tréning" handleDialogOpen={handleDialog} hadleFilterOpen={handleFilterOpen}>
       <div>
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table aria-label="sticky pagination table" stickyHeader>
-              <TableHead>
-                <TableRow>
-                  {columns.map((column, key) => (
-                    <TableCell key={key} className={classes.heading}>
-                      {column.label}
-                    </TableCell>
+        <DesktopWrapper>
+          <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table aria-label="sticky pagination table" stickyHeader>
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column, key) => (
+                      <TableCell key={key} className={classes.heading}>
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {state.data.map((row: TreningType) => (
+                    <>
+                      <TableRow
+                        key={row.id}
+                        onClick={() => handleDialog(true, 'EDIT', row)}
+                        className={classes.tableRow}>
+                        <TableCell component="th" scope="row" style={{ minWidth: 110 }}>
+                          {formatDate(row.date)}
+                        </TableCell>
+                        <TableCell align="left">
+                          <div className={classes.chipWrapper}>
+                            {row.parties.map((item: PartiesType) => (
+                              <Chip
+                                key={item.id}
+                                label={item.name}
+                                style={{
+                                  backgroundColor: getPartiesColor(item.code),
+                                  color: '#ffffff',
+                                  marginRight: 4
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </TableCell>
+                        <TableCell align="left">{row.caloriesBurned}</TableCell>
+                        <TableCell align="left">{row.time}</TableCell>
+                        <TableCell align="left">{row.notes}</TableCell>
+                      </TableRow>
+                    </>
                   ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {state.data.map((row: TreningType) => (
-                  <>
-                    <TableRow
-                      key={row.id}
-                      onClick={() => handleDialog(true, 'EDIT', row)}
-                      className={classes.tableRow}>
-                      <TableCell component="th" scope="row" style={{ minWidth: 110 }}>
-                        {formatDate(row.date)}
-                      </TableCell>
-                      <TableCell align="left">
-                        <div className={classes.chipWrapper}>
-                          {row.parties.map((item: PartiesType) => (
-                            <Chip
-                              key={item.id}
-                              label={item.name}
-                              style={{
-                                backgroundColor: getPartiesColor(item.code),
-                                color: '#ffffff',
-                                marginRight: 4
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </TableCell>
-                      <TableCell align="left">{row.caloriesBurned}</TableCell>
-                      <TableCell align="left">{row.time}</TableCell>
-                      <TableCell align="left">{row.notes}</TableCell>
-                    </TableRow>
-                  </>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+        </DesktopWrapper>
+        <MobileWrapper>
+          <Container maxWidth="md">
+            <Grid container className={classes.mobileContainer}>
+              {state.data.map((row: TreningType) => (
+                <Card className={classes.card} onClick={() => handleDialog(true, 'EDIT', row)}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6} className={classes.heading}>
+                      Dátum:
+                    </Grid>
+                    <Grid item xs={6}>
+                      {formatDate(row.date)}
+                    </Grid>
+                    <Grid item xs={6} className={classes.heading}>
+                      Trénované partie:
+                    </Grid>
+                    <Grid item xs={6}>
+                      <div>
+                        {row.parties.map((item: PartiesType) => (
+                          <Chip
+                            key={item.id}
+                            label={item.name}
+                            style={{
+                              backgroundColor: getPartiesColor(item.code),
+                              color: '#ffffff',
+                              marginRight: 4,
+                              marginBottom: 4
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </Grid>
+                    <Grid item xs={6} className={classes.heading}>
+                      Spálené kalórie:
+                    </Grid>
+                    <Grid item xs={6}>
+                      {row.caloriesBurned} kcal
+                    </Grid>
+                    <Grid item xs={6} className={classes.heading}>
+                      Trvanie tréningu:
+                    </Grid>
+                    <Grid item xs={6}>
+                      {row.time}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="body2" className={classes.heading}>
+                        Poznámky:
+                      </Typography>
+                      {row.notes}
+                    </Grid>
+                  </Grid>
+                </Card>
+              ))}
+            </Grid>
+          </Container>
+        </MobileWrapper>
         {!showCaloriesDetail && (
           <TablePagination
             rowsPerPageOptions={[]}
@@ -134,5 +195,13 @@ const useStyles = makeStyles((theme: any) => ({
   },
   chipWrapper: {
     display: 'flex'
+  },
+  mobileContainer: {
+    marginBottom: theme.spacing(5),
+    marginTop: theme.spacing(2)
+  },
+  card: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   }
 }));
