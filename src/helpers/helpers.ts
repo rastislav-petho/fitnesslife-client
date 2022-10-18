@@ -1,4 +1,4 @@
-import { PartiesCodeType } from './types';
+import { PartiesCodeType, TreningExerciseType } from './types';
 
 export const formatDate = (value: string): string => {
   const [year, month, day] = value.split('-');
@@ -16,16 +16,22 @@ export const formatDecimal = (value: number | string): string => {
 
 export const getPartiesColor = (partie: PartiesCodeType): string => {
   const colors = [
-    { code: 'SHOULDERS', color: 'red' },
-    { code: 'BICEPS', color: 'orange' },
-    { code: 'TRICEPS', color: 'grey' },
-    { code: 'CHEST', color: 'green' },
-    { code: 'LEGS', color: 'blue' },
-    { code: 'BACK', color: 'purple' },
-    { code: 'AEROBIC-EXERCISE', color: 'pink' },
-    { code: 'COMPLEX-EXERCISE', color: 'black' }
+    { code: 'SHOULDERS', color: '#BF0413' },
+    { code: 'BICEPS', color: '#F55F31' },
+    { code: 'TRICEPS', color: '#666666' },
+    { code: 'CHEST', color: '#168039' },
+    { code: 'LEGS', color: '#3D7085' },
+    { code: 'BACK', color: '#84119E' },
+    { code: 'AEROBIC-EXERCISE', color: '#F252AA' },
+    { code: 'COMPLEX-EXERCISE', color: '#202020' }
   ];
 
   const color = colors.find((color) => color.code === partie);
   return color?.color as string;
+};
+
+export const getTreningIntensity = (treningExercise: TreningExerciseType[]): number => {
+  let treningIntensity = 0;
+  treningExercise.map((item) => treningIntensity = treningIntensity + item.intensity);
+  return treningIntensity;
 };

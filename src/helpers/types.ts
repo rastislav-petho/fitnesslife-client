@@ -62,6 +62,7 @@ export type TreningExerciseType = {
   reps: number;
   series: number;
   weight: number;
+  intensity: number;
   notes: string;
 };
 
@@ -74,6 +75,7 @@ export type TreningExerciseApiType = {
   reps: number;
   series: number;
   weight: number;
+  intensity: number;
   notes: string;
 };
 

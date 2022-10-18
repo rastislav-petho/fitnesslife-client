@@ -21,6 +21,7 @@ export const fromApi = (data: any): TreningType => {
       reps: item.reps,
       series: item.series,
       weight: item.weight,
+      intensity: item.intensity,
       notes: item.notes
     })),
     partiesVariant: data.partiesVariant.map((item: any) => ({

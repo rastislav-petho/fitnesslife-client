@@ -1,14 +1,4 @@
-import {
-  Grid,
-  TextField,
-  Typography,
-  Slider,
-  makeStyles,
-  Theme,
-  createStyles,
-  Button,
-  Card
-} from '@material-ui/core';
+import { Grid, TextField, makeStyles, Theme, createStyles, Button, Card } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { TreningExerciseType } from '../../helpers/types';
 
@@ -21,32 +11,6 @@ type TreningVariantExerciseProps = {
 export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
   const classes = useStyles();
   const { index, treningExercise, setTreningExercise } = props;
-
-  const handleSeriesChange = (event: any, value: number | number[]) => {
-    setTreningExercise((prevState) => {
-      const newState = prevState.map((obj, key) => {
-        if (key === index) {
-          return { ...obj, series: value as number };
-        }
-        return obj;
-      });
-
-      return newState;
-    });
-  };
-
-  const handleRepsChange = (event: any, value: number | number[]) => {
-    setTreningExercise((prevState) => {
-      const newState = prevState.map((obj, key) => {
-        if (key === index) {
-          return { ...obj, reps: value as number };
-        }
-        return obj;
-      });
-
-      return newState;
-    });
-  };
 
   const handleChange = (event: any) => {
     setTreningExercise((prevState) => {
@@ -91,6 +55,26 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
           defaultValue={treningExercise[index].weight}
         />
         <TextField
+          name="series"
+          label="Série"
+          variant="outlined"
+          type="number"
+          onChange={handleChange}
+          InputLabelProps={{ shrink: true }}
+          className={classes.exerciseInput}
+          defaultValue={treningExercise[index].series}
+        />
+        <TextField
+          name="reps"
+          label="Počet opakovaní"
+          variant="outlined"
+          type="number"
+          onChange={handleChange}
+          InputLabelProps={{ shrink: true }}
+          className={classes.exerciseInput}
+          defaultValue={treningExercise[index].reps}
+        />
+        <TextField
           name="notes"
           label="Poznámky"
           variant="outlined"
@@ -100,29 +84,6 @@ export const TreningVariantExercise = (props: TreningVariantExerciseProps) => {
           className={classes.exerciseInput}
           defaultValue={treningExercise[index].notes}
         />
-        <Typography variant="subtitle2">Počet sérií: {treningExercise[index].series}</Typography>
-        <Slider
-          step={1}
-          min={0}
-          max={10}
-          value={treningExercise[index].series}
-          onChange={handleSeriesChange}
-          aria-labelledby="continuous-slider"
-          color="secondary"
-        />
-        <Typography variant="subtitle2" className={classes.sliderLabel}>
-          Počet opakovaní: {treningExercise[index].reps}
-        </Typography>
-        <Slider
-          step={1}
-          min={0}
-          max={50}
-          value={treningExercise[index].reps}
-          onChange={handleRepsChange}
-          aria-labelledby="continuous-slider"
-          color="secondary"
-        />
-
         <div className={classes.remove}>
           <Button onClick={() => handleRemoveExercise(index)}>
             <DeleteForeverIcon className={classes.removeIcon} />
@@ -138,9 +99,6 @@ const useStyles = makeStyles((theme: Theme) =>
     exerciseInput: {
       width: '100%',
       marginBottom: theme.spacing(2)
-    },
-    sliderLabel: {
-      marginTop: theme.spacing(2)
     },
     remove: {
       width: '100%',

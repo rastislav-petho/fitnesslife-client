@@ -17,7 +17,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { PartiesType, TreningType } from '../helpers/types';
-import { formatDate, getPartiesColor } from '../helpers/helpers';
+import { formatDate, getPartiesColor, getTreningIntensity } from '../helpers/helpers';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import { TreningFilterDialog } from '../components/Trening/TreningFilterDialog';
 
@@ -80,7 +80,8 @@ export const TreningPage: FC = () => {
                             ))}
                           </div>
                         </TableCell>
-                        <TableCell align="left">{row.caloriesBurned}</TableCell>
+                        <TableCell align="left">{row.caloriesBurned} kcal</TableCell>
+                        <TableCell align="left">{getTreningIntensity(row.treningExercise)} kg</TableCell>
                         <TableCell align="left">{row.time}</TableCell>
                         <TableCell align="left">{row.notes}</TableCell>
                       </TableRow>
@@ -127,6 +128,12 @@ export const TreningPage: FC = () => {
                     </Grid>
                     <Grid item xs={6}>
                       {row.caloriesBurned} kcal
+                    </Grid>
+                    <Grid item xs={6} className={classes.heading}>
+                      Intenzita tréningu:
+                    </Grid>
+                    <Grid item xs={6}>
+                      {getTreningIntensity(row.treningExercise)} kg
                     </Grid>
                     <Grid item xs={6} className={classes.heading}>
                       Trvanie tréningu:

@@ -24,9 +24,7 @@ type TreningPartiesExerciseProps = {
 export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
   const classes = useStyles();
   const { name, partiesVariantId, setTreningExercise, treningExercise, partieId } = props;
-  const [open, setOpen] = useState(
-    treningExercise.some((item) => item.partiesVariantId === partiesVariantId)
-  );
+  const [open, setOpen] = useState(false);
 
   const defaultTreningPartiesExerciseValues = {
     partiesVariantId: partiesVariantId,
@@ -35,6 +33,7 @@ export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
     reps: 0,
     series: 0,
     weight: 0,
+    intensity: 0,
     notes: ''
   };
 
@@ -46,10 +45,18 @@ export const TreningPartiesExercise = (props: TreningPartiesExerciseProps) => {
     setOpen(!open);
   };
 
+  let count = 0;
+  const filterExercise: TreningExerciseType[] | undefined = treningExercise.filter(
+    (item) => item.partiesVariantId === partiesVariantId
+  );
+  if (filterExercise.length !== 0) {
+    count = filterExercise.length;
+  }
+
   return (
     <div>
       <ListItem button onClick={handleClick} className={classes.list}>
-        <ListItemText primary={name} className={classes.listItem} />
+        <ListItemText primary={`${name} (${count})`} className={classes.listItem} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto">
@@ -82,10 +89,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(1)
     },
     listItem: {
-      color: theme.palette.primary.main
+      color: theme.palette.secondary.main
     },
     list: {
-      borderBottom: `1px solid ${theme.palette.primary.main}`
+      borderBottom: `1px solid ${theme.palette.secondary.main}`
     }
   })
 );

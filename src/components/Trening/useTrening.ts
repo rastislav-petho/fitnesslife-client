@@ -73,6 +73,7 @@ export const useTrening = () => {
     { label: 'Dátum' },
     { label: 'Trénované partie' },
     { label: 'Spálené kalórie' },
+    { label: 'Intenzita tréningu'},
     { label: 'Trvanie tréningu' },
     { label: 'Poznámky' }
   ];
